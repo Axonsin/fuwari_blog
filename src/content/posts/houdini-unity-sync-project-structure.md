@@ -2,8 +2,6 @@
 title: Houdini&Unity同步刷新工程文件结构
 published: 2025-07-17
 description: Houdini&Unity同步刷新工程文件结构的详细介绍和使用方法
-tags: ["Unity", "Houdini"]
-category: 杂谈
 ---
 
 在Houdini中对HDA（Houdini数字资产）进行更改后，可以通过以下几种方式在Unity中刷新它：

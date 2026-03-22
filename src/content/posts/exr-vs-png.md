@@ -2,8 +2,6 @@
 title: EXR vs. PNG
 published: 2025-07-03
 description: EXR vs. PNG的原理解析和实现方法
-tags: ["Unity", "Animation", "算法", "配置"]
-category: 杂谈
 ---
 
 ### **1. "贴图格式一般用 TGA"**

@@ -2,8 +2,6 @@
 title: xyzw中的w：齐次坐标系的作用
 published: 2025-05-23
 description: xyzw中的w：齐次坐标系的作用的技术原理和应用
-tags: ["Unity", "Shader", "渲染", "色彩"]
-category: 杂谈
 ---
 
 <font style="color:rgb(25, 27, 31);">在 Unity 渲染管线里，顶点着色器（vertex）要把模型顶点转换到</font>裁剪空间（clip space）<font style="color:rgb(25, 27, 31);">里，然后在屏幕映射步骤顶点才会从裁剪空间映射到电脑屏幕上。</font>

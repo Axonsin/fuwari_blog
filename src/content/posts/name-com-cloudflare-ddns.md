@@ -2,8 +2,6 @@
 title: Name.com配合CloudFlare实现极空间的ddns托管域名
 published: 2025-01-03
 description: 通过Name.com配合CloudFlare实现极空间的ddns托管域名
-tags: ["Unity", "Git", "教程", "配置", "网络配置"]
-category: 杂谈
 ---
 
 # 关于注册域名

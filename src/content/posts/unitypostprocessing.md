@@ -2,8 +2,6 @@
 title: Unity的Post-Processing标准（V1、V2、V3）
 published: 2025-03-06
 description: Unity的Post-Processing标准（V1、V2、V3）
-tags: ["Unity", "Shader", "Git", "渲染", "色彩", "配置", "插件"]
-category: 杂谈
 ---
 
 Post Processing Stack (PPS) 是Unity引擎中的一个模块，用于管理和应用各种后处理效果到渲染的图像上。它允许开发者和艺术家在最终图像输出之前，对场景的渲染结果进行一系列的图像处理操作，从而增强视觉效果或实现特定的艺术风格。对这个专门的后处理模块，我们成为Unity Post Processing Stack（后处理堆栈），因为在这个组件中多个后处理可以按照顺序依次实现，像一个栈的存入弹出，故得名。目前根据实现方法分为V1、V2和V3.

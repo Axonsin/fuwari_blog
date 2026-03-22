@@ -2,8 +2,6 @@
 title: VEX：如何沿用上组变量
 published: 2025-02-15
 description: Houdini VEX编程中的变量使用技巧
-tags: ["VEX"]
-category: 杂谈
 ---
 
 偶然在用的时候看到了一行代码

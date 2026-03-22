@@ -2,8 +2,6 @@
 title: 色彩空间
 published: 2025-01-23
 description: 色彩空间的原理解析和实现方法
-tags: ["Shader", "Houdini", "渲染", "算法", "物理", "色彩", "技巧", "配置"]
-category: 杂谈
 ---
 
 # 引言

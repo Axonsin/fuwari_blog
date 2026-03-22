@@ -2,8 +2,6 @@
 title: WFC瓦片生成标准解读
 published: 2025-08-02
 description: WFC瓦片生成标准解读，介绍了WFC算法的基本原理和应用场景，重点分析了瓦片的邻接规则和位掩码技术。
-tags: ["Unity", "Blender", "Shader", "Houdini", "算法"]
-category: 杂谈
 ---
 
 ![](/images/posts/640ab766.png)

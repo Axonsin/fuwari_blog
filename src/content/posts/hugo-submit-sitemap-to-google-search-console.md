@@ -2,8 +2,6 @@
 title: Hugo博客提交Sitemap至Google Search Console
 published: 2025-07-01
 description: Hugo博客提交Sitemap至Google Search Console的详细介绍和使用方法
-tags: ["配置", "网络配置"]
-category: 杂谈
 ---
 
 ### 第一部分：什么是网站地图 (Sitemap)？

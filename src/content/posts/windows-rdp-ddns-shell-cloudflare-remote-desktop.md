@@ -2,8 +2,6 @@
 title: Windows RDP+ddns+Shell+CloudFlare 实现远程桌面
 published: 2025-07-24
 description: Git项目中.gitignore文件的配置方法
-tags: ["Git", "配置", "网络配置"]
-category: 杂谈
 ---
 
 > 其实感觉Gemini讲的很好了，我就没怎么改了，我自己试着对了。就直接放上来了。类似于备忘录吧（  

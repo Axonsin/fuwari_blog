@@ -2,8 +2,6 @@
 title: 基本渲染管线
 published: 2025-01-27
 description: 基本渲染管线的技术原理和应用
-tags: ["Unity", "Shader", "Animation", "渲染", "光照", "色彩"]
-category: 杂谈
 ---
 
 ![渲染的基本结构](/images/posts/46b632a3.png)

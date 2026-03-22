@@ -2,8 +2,6 @@
 title: TBDR+Forward vs. IMR+Deferred_ 两种设备的不同权衡
 published: 2025-05-25
 description: TBDR+Forward vs. IMR+Deferred_ 两种设备的不同权衡的原理解析和实现方法
-tags: ["Shader", "Animation", "渲染", "材质", "光照", "算法", "色彩"]
-category: 杂谈
 ---
 
 ## 写在前面

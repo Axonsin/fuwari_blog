@@ -2,8 +2,6 @@
 title: Huggingface镜像站
 published: 2025-07-01
 description: Huggingface镜像站的详细介绍和使用方法
-tags: ["技术"]
-category: 杂谈
 ---
 
 

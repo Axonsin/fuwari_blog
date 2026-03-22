@@ -2,8 +2,6 @@
 title: Unity区域光（Area Light） 没有反应
 published: 2025-02-09
 description: Unity区域光（Area Light） 没有反应的技术原理和应用
-tags: ["Unity", "渲染", "材质", "光照", "色彩"]
-category: 杂谈
 ---
 
 <font style="color:rgb(44, 44, 54);">确认被照射的物体是否勾选了</font>`<font style="color:rgb(44, 44, 54);">static</font>`<font style="color:rgb(44, 44, 54);">属性。</font>

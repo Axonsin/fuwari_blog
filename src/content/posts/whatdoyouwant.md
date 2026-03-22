@@ -2,7 +2,6 @@
 title: 电子和空穴浓度计算
 published: 2025-02-16
 description: 计算在不同条件下的电子和空穴浓度
-tags: ["半导体", "电子", "空穴"]
 ---
 # 第二章
 ![第二章作业1](/images/posts/image-6.png)

@@ -2,8 +2,6 @@
 title: 什么是帧缓冲（Frame Buffer）？
 published: 2025-01-27
 description: 什么是帧缓冲（Frame Buffer）？的技术原理和应用
-tags: ["Shader", "渲染", "色彩"]
-category: 杂谈
 ---
 
 当然可以！**帧缓冲（Framebuffer）是现代图形渲染管线中的核心概念之一。下面我从渲染管线的结构、帧缓冲的作用和所在阶段**来系统讲解。

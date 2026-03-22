@@ -2,8 +2,6 @@
 title: Unity命名规范检查器
 published: 2025-07-08
 description: Unity命名规范检查器的解决方案和处理方法
-tags: ["Unity", "材质", "色彩", "故障排除"]
-category: 杂谈
 ---
 
 为美术团队在 Unity 中创建一个自动化的命名规范检查器是一个非常棒的主意，这能极大地提升工作流的规范性和效率。

@@ -2,8 +2,6 @@
 title: MikuMiku Rig && Uuunya Tools
 published: 2025-05-02
 description: Blender模型导入Unity的完整工作流程
-tags: ["Unity", "Blender", "Animation", "Git", "材质", "色彩", "教程", "配置", "MMD", "插件"]
-category: 杂谈
 ---
 
 虽然Rigify并没有像Unity那样的骨骼重定向功能，但是还有两个工具可以快速帮助我们将MMD 的骨骼模式调整为Rigify的模式。（因为带了控制器果然还是爽啊 直接薄纱传统k帧）

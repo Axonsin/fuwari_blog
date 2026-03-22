@@ -2,8 +2,6 @@
 title: 利用安卓代理为Tortoise SVN配置代理服务器
 published: 2025-07-23
 description: 利用安卓代理为Tortoise SVN配置代理服务器的详细介绍和使用方法
-tags: ["配置"]
-category: 杂谈
 ---
 
  TortoiseSVN 无法刷新，而浏览器可以访问 SVN 服务器的问题，确实是一个非常常见的现象。这通常是因为：

@@ -2,8 +2,6 @@
 title: Gitignore配置
 published: 2024-12-02
 description: Git项目中.gitignore文件的配置方法
-tags: ["Unity", "Git", "配置", "插件"]
-category: 杂谈
 ---
 
 ## Unity通用Gitignore

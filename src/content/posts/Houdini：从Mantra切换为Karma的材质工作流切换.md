@@ -2,8 +2,6 @@
 title: Houdini：从Mantra切换为Karma的材质工作流切换
 published: 2025-01-28
 description: Houdini VEX编程中的变量使用技巧
-tags: ["Shader", "Houdini", "VEX", "渲染", "材质", "色彩", "故障排除", "教程", "插件"]
-category: 杂谈
 ---
 
 我在跟教程的时候，发现principal shader节点再用Solaris的karma渲染的时候会出现概率性的材质丢失；并且有的材质节点的channels不再会被渲染出来（比如粗糙度，法线映射）

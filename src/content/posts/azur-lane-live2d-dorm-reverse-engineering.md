@@ -2,8 +2,6 @@
 title: 《碧蓝航线》：互动宿舍逆向
 published: 2025-07-14
 description: Git项目中.gitignore文件的配置方法
-tags: ["Unity", "Shader", "Animation", "Git", "渲染", "材质", "光照", "物理", "色彩", "故障排除", "配置"]
-category: 杂谈
 ---
 
 ## 1. **基本信息**

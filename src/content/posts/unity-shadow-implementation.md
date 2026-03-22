@@ -2,8 +2,6 @@
 title: Unity阴影实现
 published: 2025-02-07
 description: Unity阴影实现的解决方案和处理方法
-tags: ["Unity", "Shader", "渲染", "光照", "色彩", "故障排除", "教程"]
-category: 杂谈
 ---
 
 > _<font style="color:rgb(34, 34, 34);background-color:rgb(250, 250, 250);">Investigate how Unity renders shadows.  

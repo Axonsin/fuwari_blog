@@ -2,8 +2,6 @@
 title: quixel导入blender的bl插件以及中文化适配&bug修改
 published: 2025-02-06
 description: Blender模型导入Unity的完整工作流程
-tags: ["Unity", "Blender", "Shader", "渲染", "材质", "色彩", "插件"]
-category: 杂谈
 ---
 
 Quixel是来自Epic的一个模型资产库，其中的Bridge可以将资产库下载到本地并且进行个性化导出，如Blender、3dsmax、unity等等。但是遗憾的是blender在2.8版本后就不再支持。
