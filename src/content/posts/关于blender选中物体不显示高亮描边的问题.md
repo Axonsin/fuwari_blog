@@ -1,0 +1,20 @@
+---
+title: 关于blender选中物体不显示高亮描边的问题
+published: 2025-06-10
+description: 关于blender选中物体不显示高亮描边的问题的解决方案和处理方法
+tags: ["Blender", "色彩", "故障排除"]
+category: 杂谈
+---
+
+又水了一篇欧耶（
+
+## <font style="color:rgb(51, 51, 51);">blender里面选中物体后不显示黄色线框，这样怎么调回去？</font>
+<font style="color:rgb(51, 51, 51);">就是在物体模式不是编辑模式里面选择模型，右边的场景集合显示选中了，但视图界面的模型没有线框显示选中那个物体。</font>
+
+![显示叠加层，孩子！](/images/posts/afc9610f.jpeg)
+
+
+
+## 点选物体就是选不上，右边的场景集合也没有选中的提示
+## ![查看物体——可见性是否勾选](/images/posts/a99b92d1.png)  
+ 
