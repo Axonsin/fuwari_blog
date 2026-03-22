@@ -64,19 +64,19 @@ description: 场景打光理论的技术原理和应用
 希望写完这篇总结后，我能更深入地理解光影的语言。下一次，当被一幅画面深深吸引时，不妨多停留片刻，试着去解读它背后的光影逻辑——每一个动人的瞬间，都有光在悄然叙事。
 
 ## Ref：
-<font style="color:rgb(25, 27, 31);">影片打光技巧丨三点打灯法的基本原则 </font>[https://zhuanlan.zhihu.com/p/97115382](https://zhuanlan.zhihu.com/p/97115382)
+影片打光技巧丨三点打灯法的基本原则 [https://zhuanlan.zhihu.com/p/97115382](https://zhuanlan.zhihu.com/p/97115382)
 
-<font style="color:rgb(25, 27, 31);">拍摄必知！六大常用打光方式！ </font>[https://zhuanlan.zhihu.com/p/442849533](https://zhuanlan.zhihu.com/p/442849533)
+拍摄必知！六大常用打光方式！ [https://zhuanlan.zhihu.com/p/442849533](https://zhuanlan.zhihu.com/p/442849533)
 
-<font style="color:rgb(25, 27, 31);">  
-</font>
+  
+
 
 ![](/images/posts/b708af18.svg)
 
 ![](/images/posts/df3771fd.svg)
 
-<font style="color:rgb(25, 27, 31);">  
-</font>
+  
+
 
 
 

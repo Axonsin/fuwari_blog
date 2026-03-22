@@ -21,7 +21,7 @@ description: Blender模型导入Unity的完整工作流程
 ## Uuunya Tools：
 [https://github.com/MMD-Blender/blender_mmd_uuunyaa_tools](https://github.com/MMD-Blender/blender_mmd_uuunyaa_tools)
 
-这是MMD Tools的更加复杂的版本，作者的原句是：mmd_uuunyaa_tools is a blender addon for adjust scenes, models and materials in concert with [<font style="color:rgb(68, 147, 248);">UuuNyaa/blender_mmd_tools</font>](https://github.com/UuuNyaa/blender_mmd_tools).
+这是MMD Tools的更加复杂的版本，作者的原句是：mmd_uuunyaa_tools is a blender addon for adjust scenes, models and materials in concert with [UuuNyaa/blender_mmd_tools](https://github.com/UuuNyaa/blender_mmd_tools).
 
 需要安装MMD Tools作为前置安装环境。
 

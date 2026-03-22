@@ -61,10 +61,10 @@ RenderPass : ScriptableRenderPass
 
 ![](/images/posts/e973efe2.png)
 
-> <font style="color:rgb(83, 88, 97);">这里来个形象点的比喻，就拿蟹堡王的运作方式来举例，可以把我们当做是顾客，前台就是章鱼哥，后台（RenderPass，Shader）就是RenderPass ------ 我们在前台点餐（设置参数），章鱼哥（RenderFeature）就告诉海绵宝宝（RenderPass，Shader）做几个汉堡，该放什么酱等。可以这样理解。</font>
+> 这里来个形象点的比喻，就拿蟹堡王的运作方式来举例，可以把我们当做是顾客，前台就是章鱼哥，后台（RenderPass，Shader）就是RenderPass ------ 我们在前台点餐（设置参数），章鱼哥（RenderFeature）就告诉海绵宝宝（RenderPass，Shader）做几个汉堡，该放什么酱等。可以这样理解。
 >
 
-## <font style="color:rgb(83, 88, 97);">示例代码（这里用的是RenderFeature和Shader的结合）</font>
+## 示例代码（这里用的是RenderFeature和Shader的结合）
 这里以我自己做的模仿openAI发布会上的像素化LED广告牌Shader来示例。目的是抓取camera的渲染并输出到纹理，转交给Shader后再将Shader处理过的纹理返回到相机渲染中。
 
 RenderFeature部分

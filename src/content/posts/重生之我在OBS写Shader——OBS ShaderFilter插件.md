@@ -16,13 +16,13 @@ OBS ShaderFilter是一个可以使用HLSL/GLSL对图层进行处理的插件，�
 ### 如何让OBS启用OpenGL渲染？
 因为程序会优先启动微软的DirectX渲染，也就是hlsl，但是如果偏要使用OpenGL也是可以的。
 
-**<font style="color:rgb(24, 25, 28);">Step1. 增加 --allow-opengl 启动参数，选中</font>****<font style="color:rgb(255, 101, 78);">OBS快捷方式</font>****<font style="color:rgb(24, 25, 28);">，在目标后面增加</font>****<font style="color:rgb(255, 101, 78);"> --allow-opengl</font>**
+**Step1. 增加 --allow-opengl 启动参数，选中****OBS快捷方式****，在目标后面增加**** --allow-opengl**
 
 ![](/images/posts/23558ff0.webp)
 
-**<font style="color:rgb(24, 25, 28);">Step2. 设置中进行切换</font>**
+**Step2. 设置中进行切换**
 
-<font style="color:rgb(24, 25, 28);">进入obs设置界面，在 高级-视频-渲染器 中切换到OpenGL，</font>**<font style="color:rgb(255, 101, 78);">切换应用设置之后需要重启</font>**<font style="color:rgb(24, 25, 28);">！</font>
+进入obs设置界面，在 高级-视频-渲染器 中切换到OpenGL，**切换应用设置之后需要重启**！
 
 ![](/images/posts/25cc2689.webp)
 

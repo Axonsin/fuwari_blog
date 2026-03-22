@@ -4,9 +4,9 @@ published: 2025-02-09
 description: Unity区域光（Area Light） 没有反应的技术原理和应用
 ---
 
-<font style="color:rgb(44, 44, 54);">确认被照射的物体是否勾选了</font>`<font style="color:rgb(44, 44, 54);">static</font>`<font style="color:rgb(44, 44, 54);">属性。</font>
+确认被照射的物体是否勾选了`static`属性。
 
-<font style="color:rgb(44, 44, 54);">如果还是没有反应，可以检查</font>`<font style="color:rgb(44, 44, 54);">LightSettings</font>`<font style="color:rgb(44, 44, 54);">面板，确保已经勾选了</font>`<font style="color:rgb(44, 44, 54);">Auto Generate</font>`<font style="color:rgb(44, 44, 54);">选项。</font>
+如果还是没有反应，可以检查`LightSettings`面板，确保已经勾选了`Auto Generate`选项。
 
   
 勾选 Static 的物体会告诉 Unity 这个物体可以用于特定的优化或功能。Static 选项下包含多个具体的静态属性，你可以单独启用它们，或者通过勾选 Static 启用所有静态属性。

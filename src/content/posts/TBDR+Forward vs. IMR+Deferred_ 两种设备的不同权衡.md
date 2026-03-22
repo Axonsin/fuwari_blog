@@ -12,186 +12,186 @@ description: TBDR+Forward vs. IMR+Deferred_ 两种设备的不同权衡的原理
 
 ![](/images/posts/b011e42e.png)
 
-相机也有一句话说的是“底大一级压死人”，这句话同样也可以应用在芯片设计中。（~~光是看着面积就知道很吓人了）~~同时，桌面端直接利用电源供电，仅算上GPU就可以获得高达375W的功率，不仅能在算力上“力大飞砖”，同时同样的功能，桌面端的指标明显要优异于移动端。更别说<font style="color:rgb(44, 44, 54);">芯片面积受限，On-Chip Memory（L1/L2缓存）容量要比桌面端更小（的多）。好的，现在我们知道了手机的算力天生就要比电脑小得多，接下来就先从硬件结构上说明这两个硬件渲染方法：TBDR/IMR。</font>
+相机也有一句话说的是“底大一级压死人”，这句话同样也可以应用在芯片设计中。（~~光是看着面积就知道很吓人了）~~同时，桌面端直接利用电源供电，仅算上GPU就可以获得高达375W的功率，不仅能在算力上“力大飞砖”，同时同样的功能，桌面端的指标明显要优异于移动端。更别说芯片面积受限，On-Chip Memory（L1/L2缓存）容量要比桌面端更小（的多）。好的，现在我们知道了手机的算力天生就要比电脑小得多，接下来就先从硬件结构上说明这两个硬件渲染方法：TBDR/IMR。
 
-## <font style="color:rgb(44, 44, 54);">TBDR/IMR</font>
-**<font style="color:rgb(44, 44, 54);">隶属于硬件层面的渲染架构，不可以进行两者间的切换。</font>**
+## TBDR/IMR
+**隶属于硬件层面的渲染架构，不可以进行两者间的切换。**
 
-### <font style="color:rgb(44, 44, 54);">TBDR： Tile-Based Deferred Rendering </font>
-<font style="color:rgb(44, 44, 54);">TBDR大致可以分为三个模块：Binning Pass, Rendering Pass, Resolve Pass.</font>![](/images/posts/b83922c0.png)
+### TBDR： Tile-Based Deferred Rendering 
+TBDR大致可以分为三个模块：Binning Pass, Rendering Pass, Resolve Pass.![](/images/posts/b83922c0.png)
 
-1. <font style="color:rgb(25, 27, 31);">最上一层：Render Pipeline (渲染管线)  
-</font>
-2. <font style="color:rgb(25, 27, 31);">中间一层：On-Chip Buffer（a.k.a. 片上内存，Tiled Frame Buffer & Tiled Depth Buffer）  
-</font>
-3. <font style="color:rgb(25, 27, 31);">最下一层：系统内存，CPU和GPU共享</font>
+1. 最上一层：Render Pipeline (渲染管线)  
 
-#### <font style="color:rgb(44, 44, 54);">Binning Pass：</font>
-<font style="color:rgb(44, 44, 54);"></font>**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：将几何数据（顶点、三角形）分配到对应的屏幕小块（Tile）中，为后续渲染做准备。</font>
+2. 中间一层：On-Chip Buffer（a.k.a. 片上内存，Tiled Frame Buffer & Tiled Depth Buffer）  
 
-**<font style="color:rgb(44, 44, 54);">流程步骤</font>**<font style="color:rgb(44, 44, 54);">：</font>
+3. 最下一层：系统内存，CPU和GPU共享
 
-1. **<font style="color:rgb(44, 44, 54);">顶点处理</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - **<font style="color:rgb(44, 44, 54);">顶点着色器</font>**<font style="color:rgb(44, 44, 54);">（Vertex Shader）会接收来自软件层面的顶点数据，处理顶点数据，计算顶点的屏幕坐标（投影到屏幕空间）。</font>
-    - **<font style="color:rgb(44, 44, 54);">简化处理</font>**<font style="color:rgb(44, 44, 54);">：部分GPU（如Adreno）可能使用简化版顶点着色器，仅计算顶点位置，忽略纹理坐标、法线等细节（这些在分块阶段不需要）。</font>
-2. **<font style="color:rgb(44, 44, 54);">分块分配</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">将屏幕划分为固定大小的</font><font style="color:rgb(44, 44, 54);"> </font>**<font style="color:rgb(44, 44, 54);">Tile</font>**<font style="color:rgb(44, 44, 54);">（如16x16像素的小方块）。</font>
-    - <font style="color:rgb(44, 44, 54);">遍历所有三角形，确定每个三角形覆盖了哪些 Tile。</font>
-    - <font style="color:rgb(44, 44, 54);">将覆盖的 Tile 记录到</font><font style="color:rgb(44, 44, 54);"> </font>**<font style="color:rgb(44, 44, 54);">Primitive List</font>**<font style="color:rgb(44, 44, 54);">（图元列表）中，记录每个 Tile 包含哪些三角形。</font>
-3. **<font style="color:rgb(44, 44, 54);">数据存储</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">将每个 Tile 的 Primitive List 和顶点数据写入 </font>**<font style="color:rgb(44, 44, 54);">系统内存(aka. LPDDR)</font>**<font style="color:rgb(44, 44, 54);">。</font>
-    - **<font style="color:rgb(44, 44, 54);">关键点</font>**<font style="color:rgb(44, 44, 54);">：分块阶段仅记录几何信息，不进行光栅化或像素着色。</font>
+#### Binning Pass：
+**目标**：将几何数据（顶点、三角形）分配到对应的屏幕小块（Tile）中，为后续渲染做准备。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程步骤**：
 
-+ **<font style="color:rgb(44, 44, 54);">Tiler 单元</font>**<font style="color:rgb(44, 44, 54);">：负责将三角形分配到对应的 Tile。</font>
-+ **<font style="color:rgb(44, 44, 54);">顶点着色器</font>**<font style="color:rgb(44, 44, 54);">：处理顶点坐标。</font>
-+ **<font style="color:rgb(44, 44, 54);">系统内存</font>**<font style="color:rgb(44, 44, 54);">：存储分块后的几何数据（Primitive List）。</font>
+1. **顶点处理**：
+    - **顶点着色器**（Vertex Shader）会接收来自软件层面的顶点数据，处理顶点数据，计算顶点的屏幕坐标（投影到屏幕空间）。
+    - **简化处理**：部分GPU（如Adreno）可能使用简化版顶点着色器，仅计算顶点位置，忽略纹理坐标、法线等细节（这些在分块阶段不需要）。
+2. **分块分配**：
+    - 将屏幕划分为固定大小的 **Tile**（如16x16像素的小方块）。
+    - 遍历所有三角形，确定每个三角形覆盖了哪些 Tile。
+    - 将覆盖的 Tile 记录到 **Primitive List**（图元列表）中，记录每个 Tile 包含哪些三角形。
+3. **数据存储**：
+    - 将每个 Tile 的 Primitive List 和顶点数据写入 **系统内存(aka. LPDDR)**。
+    - **关键点**：分块阶段仅记录几何信息，不进行光栅化或像素着色。
+
+**参与组件**：
+
++ **Tiler 单元**：负责将三角形分配到对应的 Tile。
++ **顶点着色器**：处理顶点坐标。
++ **系统内存**：存储分块后的几何数据（Primitive List）。
 
 #### Rendering Pass:
-**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：逐 Tile 处理几何数据，完成光栅化和像素着色，结果暂存到片上内存（On-Chip Memory）。</font>
+**目标**：逐 Tile 处理几何数据，完成光栅化和像素着色，结果暂存到片上内存（On-Chip Memory）。
 
-**<font style="color:rgb(44, 44, 54);">流程步骤</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程步骤**：
 
-1. **<font style="color:rgb(44, 44, 54);">Tile 遍历</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">按顺序处理每个 Tile（如从左到右、从上到下）。</font>
-2. **<font style="color:rgb(44, 44, 54);">几何处理</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - **<font style="color:rgb(44, 44, 54);">重新处理顶点</font>**<font style="color:rgb(44, 44, 54);">：读取该 Tile 的 Primitive List，重新执行顶点着色器（这次会完整计算顶点属性，如纹理坐标、法线等）。</font>
-    - **<font style="color:rgb(44, 44, 54);">裁剪与剔除</font>**<font style="color:rgb(44, 44, 54);">：进行背面剔除、视锥体剔除等，减少无效三角形。</font>
-3. **<font style="color:rgb(44, 44, 54);">光栅化（</font>****<font style="color:rgb(25, 27, 31);">Rasterization）</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">将三角形转换为该 Tile 内的像素（片元）。</font>
-    - **<font style="color:rgb(44, 44, 54);">深度测试（Z-Test）</font>**<font style="color:rgb(44, 44, 54);">：利用 </font>**<font style="color:rgb(44, 44, 54);">HSR（Hidden Surface Removal，隐藏面消除）</font>**<font style="color:rgb(44, 44, 54);"> 或 </font>**<font style="color:rgb(44, 44, 54);">LRZ（Low Resolution Z）</font>**<font style="color:rgb(44, 44, 54);"> 技术，快速剔除被遮挡的片元，减少不必要的像素着色计算。（需要注意的是，虽然我们认为IMR可以“不切实际的进行高强度运算”，但是</font>**<font style="color:rgb(44, 44, 54);">它同样可以采用Early-Z/Pre-Z来进行剔除并减少overdraw</font>**<font style="color:rgb(44, 44, 54);">）</font>
-4. **<font style="color:rgb(44, 44, 54);">像素着色</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">开始执行像素着色器（Fragment Shader），计算每个片元的颜色、光照等。</font>
-    - **<font style="color:rgb(44, 44, 54);">结果暂存</font>**<font style="color:rgb(44, 44, 54);">：将处理后的像素数据写入</font><font style="color:rgb(44, 44, 54);"> </font>**<font style="color:rgb(44, 44, 54);">片上内存</font>**<font style="color:rgb(44, 44, 54);">（Tile Buffer）。</font>
+1. **Tile 遍历**：
+    - 按顺序处理每个 Tile（如从左到右、从上到下）。
+2. **几何处理**：
+    - **重新处理顶点**：读取该 Tile 的 Primitive List，重新执行顶点着色器（这次会完整计算顶点属性，如纹理坐标、法线等）。
+    - **裁剪与剔除**：进行背面剔除、视锥体剔除等，减少无效三角形。
+3. **光栅化（****Rasterization）**：
+    - 将三角形转换为该 Tile 内的像素（片元）。
+    - **深度测试（Z-Test）**：利用 **HSR（Hidden Surface Removal，隐藏面消除）** 或 **LRZ（Low Resolution Z）** 技术，快速剔除被遮挡的片元，减少不必要的像素着色计算。（需要注意的是，虽然我们认为IMR可以“不切实际的进行高强度运算”，但是**它同样可以采用Early-Z/Pre-Z来进行剔除并减少overdraw**）
+4. **像素着色**：
+    - 开始执行像素着色器（Fragment Shader），计算每个片元的颜色、光照等。
+    - **结果暂存**：将处理后的像素数据写入 **片上内存**（Tile Buffer）。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**参与组件**：
 
-+ **<font style="color:rgb(44, 44, 54);">光栅化引擎</font>**<font style="color:rgb(44, 44, 54);">：将三角形转换为像素。</font>
-+ **<font style="color:rgb(44, 44, 54);">像素着色器</font>**<font style="color:rgb(44, 44, 54);">：处理像素颜色和光照。</font>
-+ **<font style="color:rgb(44, 44, 54);">HSR/LRZ 单元</font>**<font style="color:rgb(44, 44, 54);">：隐藏面消除，减少过绘制（Overdraw）。</font>
-+ **<font style="color:rgb(44, 44, 54);">片上内存</font>**<font style="color:rgb(44, 44, 54);">：临时存储 Tile 的渲染结果（颜色、深度缓冲等）。</font>
++ **光栅化引擎**：将三角形转换为像素。
++ **像素着色器**：处理像素颜色和光照。
++ **HSR/LRZ 单元**：隐藏面消除，减少过绘制（Overdraw）。
++ **片上内存**：临时存储 Tile 的渲染结果（颜色、深度缓冲等）。
 
 #### Resolve Pass：
-**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：将所有 Tile 的渲染结果合并到最终的帧缓冲区（Frame Buffer）。</font>
+**目标**：将所有 Tile 的渲染结果合并到最终的帧缓冲区（Frame Buffer）。
 
-**<font style="color:rgb(44, 44, 54);">流程步骤</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程步骤**：
 
-1. **<font style="color:rgb(44, 44, 54);">合并 Tile 数据</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">将每个 Tile 的 Tile Buffer 内容（颜色、深度等）从片上内存写入系统内存的帧缓冲区Framebuffer。</font>
-    - **<font style="color:rgb(44, 44, 54);">多采样抗锯齿（MSAA）</font>**<font style="color:rgb(44, 44, 54);">：如果启用了 MSAA，此时会直接将多个样本点合并为最终像素颜色。这里由于Tile的像素数据直接按块存在于片上内存，极大提高了MSAA的缓存命中率（直接采样点即可而不需要从片外内存读取Framebuffer）。这也是为什么MSAA在低性能移动端的性能损耗会小于TAA。但是，MSAA的每个像素存储多个样本点（如4x MSAA占用4倍显存），在移动端设备中，显存容量有限（如低端设备仅1-2GB），可能导致显存不足或CPU和GPU间的左右脑互搏，带宽竞争。</font>
-2. **<font style="color:rgb(44, 44, 54);">清理与提交</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">清除片上内存中的临时数据（如深度缓冲）。</font>
-    - <font style="color:rgb(44, 44, 54);">将完成的帧提交给显示屏。</font>
+1. **合并 Tile 数据**：
+    - 将每个 Tile 的 Tile Buffer 内容（颜色、深度等）从片上内存写入系统内存的帧缓冲区Framebuffer。
+    - **多采样抗锯齿（MSAA）**：如果启用了 MSAA，此时会直接将多个样本点合并为最终像素颜色。这里由于Tile的像素数据直接按块存在于片上内存，极大提高了MSAA的缓存命中率（直接采样点即可而不需要从片外内存读取Framebuffer）。这也是为什么MSAA在低性能移动端的性能损耗会小于TAA。但是，MSAA的每个像素存储多个样本点（如4x MSAA占用4倍显存），在移动端设备中，显存容量有限（如低端设备仅1-2GB），可能导致显存不足或CPU和GPU间的左右脑互搏，带宽竞争。
+2. **清理与提交**：
+    - 清除片上内存中的临时数据（如深度缓冲）。
+    - 将完成的帧提交给显示屏。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**参与组件**：
 
-+ **<font style="color:rgb(44, 44, 54);">ROP（光栅操作单元）</font>**<font style="color:rgb(44, 44, 54);">：合并 Tile 数据并执行最终的写入操作。</font>
-+ **<font style="color:rgb(44, 44, 54);">系统内存DDR</font>**<font style="color:rgb(44, 44, 54);">：存储最终的帧缓冲区。</font>
++ **ROP（光栅操作单元）**：合并 Tile 数据并执行最终的写入操作。
++ **系统内存DDR**：存储最终的帧缓冲区。
 
   
  
 
-### IMR: <font style="color:rgb(25, 27, 31);">Immediate Mode Rendering</font>
-<font style="color:rgb(44, 44, 54);">IMR的渲染流程分为以下</font>**<font style="color:rgb(44, 44, 54);">4个核心阶段：Vertex Process, Rasterizer,  Pixel Shading, Merge.</font>**
+### IMR: Immediate Mode Rendering
+IMR的渲染流程分为以下**4个核心阶段：Vertex Process, Rasterizer,  Pixel Shading, Merge.**
 
 ![](/images/posts/c66840cd.png)
 
-#### <font style="color:rgb(44, 44, 54);">Vertex Process</font>
-**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：将顶点数据转换为屏幕空间坐标，并执行顶点着色器计算。</font>
+#### Vertex Process
+**目标**：将顶点数据转换为屏幕空间坐标，并执行顶点着色器计算。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**参与组件**：
 
-+ **<font style="color:rgb(44, 44, 54);">顶点缓冲区（Vertex Buffer）</font>**<font style="color:rgb(44, 44, 54);">：存储顶点的原始数据（坐标、法线、纹理坐标等）。</font>
-+ **<font style="color:rgb(44, 44, 54);">顶点着色器（Vertex Shader, VS）</font>**<font style="color:rgb(44, 44, 54);">：GPU的可编程单元，负责计算顶点的最终位置、颜色、纹理坐标等。</font>
-+ **<font style="color:rgb(44, 44, 54);">固定功能单元（Fixed-Function Units）</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - **<font style="color:rgb(44, 44, 54);">顶点属性组装（Vertex Assembly）</font>**<font style="color:rgb(44, 44, 54);">：将顶点数据从内存加载到GPU内部缓存。</font>
-    - **<font style="color:rgb(44, 44, 54);">投影变换（Projection Transform）</font>**<font style="color:rgb(44, 44, 54);">：将顶点坐标从模型空间转换为屏幕空间。</font>
-+ **<font style="color:rgb(44, 44, 54);">缓存（L1/L2 Cache）</font>**<font style="color:rgb(44, 44, 54);">：减少顶点数据从主存重复读取的延迟。</font>
++ **顶点缓冲区（Vertex Buffer）**：存储顶点的原始数据（坐标、法线、纹理坐标等）。
++ **顶点着色器（Vertex Shader, VS）**：GPU的可编程单元，负责计算顶点的最终位置、颜色、纹理坐标等。
++ **固定功能单元（Fixed-Function Units）**：
+    - **顶点属性组装（Vertex Assembly）**：将顶点数据从内存加载到GPU内部缓存。
+    - **投影变换（Projection Transform）**：将顶点坐标从模型空间转换为屏幕空间。
++ **缓存（L1/L2 Cache）**：减少顶点数据从主存重复读取的延迟。
 
-**<font style="color:rgb(44, 44, 54);">流程</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程**：
 
-1. <font style="color:rgb(44, 44, 54);">顶点数据从系统内存加载到GPU的顶点缓冲区。</font>
-2. <font style="color:rgb(44, 44, 54);">顶点着色器对每个顶点执行计算（如光照、动画变形）。</font>
-3. <font style="color:rgb(44, 44, 54);">处理后的顶点数据通过固定功能单元完成投影变换，得到屏幕坐标。</font>
+1. 顶点数据从系统内存加载到GPU的顶点缓冲区。
+2. 顶点着色器对每个顶点执行计算（如光照、动画变形）。
+3. 处理后的顶点数据通过固定功能单元完成投影变换，得到屏幕坐标。
 
-#### **<font style="color:rgb(44, 44, 54);">Rasterization</font>**
-**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：将三角形转换为像素（片元），并进行深度测试（Early-Z）。</font>
+#### **Rasterization**
+**目标**：将三角形转换为像素（片元），并进行深度测试（Early-Z）。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**参与组件**：
 
-+ **<font style="color:rgb(44, 44, 54);">光栅化单元（Rasterizer）</font>**<font style="color:rgb(44, 44, 54);">：负责将三角形分解为像素级别的片元。</font>
-+ **<font style="color:rgb(44, 44, 54);">深度缓冲区（Depth Buffer）</font>**<font style="color:rgb(44, 44, 54);">：存储每个像素的深度值，用于隐藏面消除（Z-Test）。</font>
-+ **<font style="color:rgb(44, 44, 54);">裁剪单元（Clipping Unit）</font>**<font style="color:rgb(44, 44, 54);">：剔除超出视口的三角形。</font>
++ **光栅化单元（Rasterizer）**：负责将三角形分解为像素级别的片元。
++ **深度缓冲区（Depth Buffer）**：存储每个像素的深度值，用于隐藏面消除（Z-Test）。
++ **裁剪单元（Clipping Unit）**：剔除超出视口的三角形。
 
-**<font style="color:rgb(44, 44, 54);">流程</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程**：
 
-1. <font style="color:rgb(44, 44, 54);">光栅化单元将三角形的顶点坐标扩展为覆盖的像素区域。</font>
-2. <font style="color:rgb(44, 44, 54);">每个像素生成一个</font>**<font style="color:rgb(44, 44, 54);">片元（Fragment）</font>**<font style="color:rgb(44, 44, 54);">，并计算其深度值。</font>
-3. <font style="color:rgb(44, 44, 54);">片元通过Early-Z测试：若深度值小于Depth Buffer中的值，则保留；否则丢弃。</font>
-4. <font style="color:rgb(44, 44, 54);">未被丢弃的片元传递给像素着色器处理。</font>
+1. 光栅化单元将三角形的顶点坐标扩展为覆盖的像素区域。
+2. 每个像素生成一个**片元（Fragment）**，并计算其深度值。
+3. 片元通过Early-Z测试：若深度值小于Depth Buffer中的值，则保留；否则丢弃。
+4. 未被丢弃的片元传递给像素着色器处理。
 
 #### Pixel Shadeing
-**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：计算每个片元的最终颜色值。</font>
+**目标**：计算每个片元的最终颜色值。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**参与组件**：
 
-+ **<font style="color:rgb(44, 44, 54);">像素着色器（Pixel Shader, PS aka. Fragment Shader, FS）</font>**<font style="color:rgb(44, 44, 54);">：对通过Early-Z的片元执行光照、纹理采样等计算。</font>
-+ **<font style="color:rgb(44, 44, 54);">纹理单元（Texture Units）</font>**<font style="color:rgb(44, 44, 54);">：从纹理内存加载纹理数据（如法线贴图、颜色贴图）。</font>
-+ **<font style="color:rgb(44, 44, 54);">固定功能插值单元</font>**<font style="color:rgb(44, 44, 54);">：对顶点属性进行插值（如颜色、纹理坐标）。</font>
++ **像素着色器（Pixel Shader, PS aka. Fragment Shader, FS）**：对通过Early-Z的片元执行光照、纹理采样等计算。
++ **纹理单元（Texture Units）**：从纹理内存加载纹理数据（如法线贴图、颜色贴图）。
++ **固定功能插值单元**：对顶点属性进行插值（如颜色、纹理坐标）。
 
-**<font style="color:rgb(44, 44, 54);">流程</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程**：
 
-1. <font style="color:rgb(44, 44, 54);">片元通过插值单元获取顶点属性的插值结果（如像素颜色、纹理坐标）。</font>
-2. <font style="color:rgb(44, 44, 54);">像素着色器根据插值后的数据、纹理采样结果及光照模型计算最终颜色。</font>
-3. <font style="color:rgb(44, 44, 54);">若启用了Alpha测试（Alpha Test），部分片元可能被丢弃。</font>
+1. 片元通过插值单元获取顶点属性的插值结果（如像素颜色、纹理坐标）。
+2. 像素着色器根据插值后的数据、纹理采样结果及光照模型计算最终颜色。
+3. 若启用了Alpha测试（Alpha Test），部分片元可能被丢弃。
 
 #### Merger
-**<font style="color:rgb(44, 44, 54);">目标</font>**<font style="color:rgb(44, 44, 54);">：将片元颜色写入Frame Buffer，并执行混合（Blending）和深度更新。</font>
+**目标**：将片元颜色写入Frame Buffer，并执行混合（Blending）和深度更新。
 
-**<font style="color:rgb(44, 44, 54);">参与组件</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**参与组件**：
 
-+ **<font style="color:rgb(44, 44, 54);">混合单元（Blending Unit）</font>**<font style="color:rgb(44, 44, 54);">：根据混合方程（如透明度）合并新颜色与已有颜色。</font>
-+ **<font style="color:rgb(44, 44, 54);">深度Stencil单元</font>**<font style="color:rgb(44, 44, 54);">：执行Late-Z测试和Stencil Buffer操作。</font>
-+ **<font style="color:rgb(44, 44, 54);">Frame Buffer（颜色缓冲区）</font>**<font style="color:rgb(44, 44, 54);">：存储最终像素颜色。</font>
-+ **<font style="color:rgb(44, 44, 54);">Depth Buffer</font>**<font style="color:rgb(44, 44, 54);">：存储深度值，用于后续帧的深度测试。</font>
++ **混合单元（Blending Unit）**：根据混合方程（如透明度）合并新颜色与已有颜色。
++ **深度Stencil单元**：执行Late-Z测试和Stencil Buffer操作。
++ **Frame Buffer（颜色缓冲区）**：存储最终像素颜色。
++ **Depth Buffer**：存储深度值，用于后续帧的深度测试。
 
-**<font style="color:rgb(44, 44, 54);">流程</font>**<font style="color:rgb(44, 44, 54);">：</font>
+**流程**：
 
-1. <font style="color:rgb(44, 44, 54);">通过像素着色的片元进入Late-Z测试（若未通过Early-Z）。</font>
-2. <font style="color:rgb(44, 44, 54);">混合单元将新颜色与Frame Buffer中的颜色混合（如透明物体叠加）。</font>
-3. <font style="color:rgb(44, 44, 54);">更新Frame Buffer和Depth Buffer，完成像素输出。</font>
+1. 通过像素着色的片元进入Late-Z测试（若未通过Early-Z）。
+2. 混合单元将新颜色与Frame Buffer中的颜色混合（如透明物体叠加）。
+3. 更新Frame Buffer和Depth Buffer，完成像素输出。
 
 #### 电脑端参与的组件：
-##### <font style="color:rgb(44, 44, 54);">硬件组件：</font>
-1. **<font style="color:rgb(44, 44, 54);">GPU核心模块</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - **<font style="color:rgb(44, 44, 54);">计算单元（Shader Cores）</font>**<font style="color:rgb(44, 44, 54);">：执行顶点着色器、像素着色器。</font>
-    - **<font style="color:rgb(44, 44, 54);">光栅化引擎</font>**<font style="color:rgb(44, 44, 54);">：处理光栅化和深度测试。</font>
-    - **<font style="color:rgb(44, 44, 54);">内存控制器</font>**<font style="color:rgb(44, 44, 54);">：管理与系统内存的交互。</font>
-2. **<font style="color:rgb(44, 44, 54);">缓存结构（片上内存）</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - **<font style="color:rgb(44, 44, 54);">L1/L2 Cache</font>**<font style="color:rgb(44, 44, 54);">：缓存顶点数据和中间结果。</font>
-    - **<font style="color:rgb(44, 44, 54);">Texture Cache</font>**<font style="color:rgb(44, 44, 54);">：加速纹理采样。</font>
-3. **<font style="color:rgb(44, 44, 54);">显存（VRAM）</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">存储Frame Buffer、Depth Buffer、纹理等数据。</font>
+##### 硬件组件：
+1. **GPU核心模块**：
+    - **计算单元（Shader Cores）**：执行顶点着色器、像素着色器。
+    - **光栅化引擎**：处理光栅化和深度测试。
+    - **内存控制器**：管理与系统内存的交互。
+2. **缓存结构（片上内存）**：
+    - **L1/L2 Cache**：缓存顶点数据和中间结果。
+    - **Texture Cache**：加速纹理采样。
+3. **显存（VRAM）**：
+    - 存储Frame Buffer、Depth Buffer、纹理等数据。
 
-##### <font style="color:rgb(44, 44, 54);">软件组件：</font>
-1. **<font style="color:rgb(44, 44, 54);">图形API</font>**<font style="color:rgb(44, 44, 54);">（如DirectX、OpenGL）：</font>
-    - <font style="color:rgb(44, 44, 54);">管理顶点缓冲区、渲染状态（如混合模式、深度测试）。</font>
-2. **<font style="color:rgb(44, 44, 54);">驱动程序</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">将API命令转换为GPU可执行的指令流。</font>
-3. **<font style="color:rgb(44, 44, 54);">着色器代码</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - <font style="color:rgb(44, 44, 54);">顶点着色器、像素着色器的可编程逻辑。</font>
+##### 软件组件：
+1. **图形API**（如DirectX、OpenGL）：
+    - 管理顶点缓冲区、渲染状态（如混合模式、深度测试）。
+2. **驱动程序**：
+    - 将API命令转换为GPU可执行的指令流。
+3. **着色器代码**：
+    - 顶点着色器、像素着色器的可编程逻辑。
 
 ### Forward搭配TBDR，而Deferred则会搭配IMR？
 这就要说到缺点了。虽然Forward在目标实现接近于IMR（两者的目的都是需要及时渲染），按理来说应该是Forward+IMR。我们来简要过一下两个渲染管线：
 
-#### **<font style="color:rgb(44, 44, 54);">Forward管线流程</font>**
-1. **<font style="color:rgb(44, 44, 54);">顶点处理</font>**<font style="color:rgb(44, 44, 54);">：顶点着色器计算顶点坐标、法线等。</font>
-2. **<font style="color:rgb(44, 44, 54);">光栅化</font>**<font style="color:rgb(44, 44, 54);">：生成片元并进行Early-Z测试。</font>
-3. **<font style="color:rgb(44, 44, 54);">片段处理</font>**<font style="color:rgb(44, 44, 54);">：</font>
-    - **<font style="color:rgb(44, 44, 54);">ForwardBase Pass</font>**<font style="color:rgb(44, 44, 54);">：计算主光源（如Directional Light）。</font>
-    - **<font style="color:rgb(44, 44, 54);">ForwardAdd Pass</font>**<font style="color:rgb(44, 44, 54);">：为每个附加光源（点光源、聚光灯）单独渲染，叠加光照。</font>
-    - <font style="color:rgb(44, 44, 54);">需要注意的是，在URP14中，ForwardAdd Pass被取消，为了简洁化，可以直接调用GetAdditionalLightsCount()。但是底层实现逻辑仍然一致。</font>
+#### **Forward管线流程**
+1. **顶点处理**：顶点着色器计算顶点坐标、法线等。
+2. **光栅化**：生成片元并进行Early-Z测试。
+3. **片段处理**：
+    - **ForwardBase Pass**：计算主光源（如Directional Light）。
+    - **ForwardAdd Pass**：为每个附加光源（点光源、聚光灯）单独渲染，叠加光照。
+    - 需要注意的是，在URP14中，ForwardAdd Pass被取消，为了简洁化，可以直接调用GetAdditionalLightsCount()。但是底层实现逻辑仍然一致。
 + LightAdd in URP14：
 
 ```cpp
@@ -209,13 +209,13 @@ description: TBDR+Forward vs. IMR+Deferred_ 两种设备的不同权衡的原理
 #endif
 ```
 
-4. **<font style="color:rgb(44, 44, 54);">混合与输出</font>**<font style="color:rgb(44, 44, 54);">：将结果写入Frame Buffer。</font>
+4. **混合与输出**：将结果写入Frame Buffer。
 
-#### **<font style="color:rgb(44, 44, 54);">Deferred管线流程</font>**
-1. **<font style="color:rgb(44, 44, 54);">顶点处理</font>**<font style="color:rgb(44, 44, 54);">：仅计算顶点坐标，不处理光照。</font>
-2. **<font style="color:rgb(44, 44, 54);">光栅化</font>**<font style="color:rgb(44, 44, 54);">：开始采集并生成G-Buffer（存储几何数据：位置、法线、颜色、材质属性等）。</font>
-3. **<font style="color:rgb(44, 44, 54);">光照Pass</font>**<font style="color:rgb(44, 44, 54);">：遍历屏幕像素，根据G-Buffer数据计算所有光源对像素的影响。在这一阶段， 会在屏幕上逐像素执行光照，</font>**<font style="color:rgb(44, 44, 54);">不再访问场景几何 </font>**<font style="color:rgb(44, 44, 54);">。</font>
-4. **<font style="color:rgb(44, 44, 54);">混合与输出</font>**<font style="color:rgb(44, 44, 54);">：将结果写入Frame Buffer。</font>
+#### **Deferred管线流程**
+1. **顶点处理**：仅计算顶点坐标，不处理光照。
+2. **光栅化**：开始采集并生成G-Buffer（存储几何数据：位置、法线、颜色、材质属性等）。
+3. **光照Pass**：遍历屏幕像素，根据G-Buffer数据计算所有光源对像素的影响。在这一阶段， 会在屏幕上逐像素执行光照，**不再访问场景几何 **。
+4. **混合与输出**：将结果写入Frame Buffer。
 
 ![](/images/posts/f9b644cf.png)
 
@@ -230,7 +230,7 @@ description: TBDR+Forward vs. IMR+Deferred_ 两种设备的不同权衡的原理
 
 虽然deferred在多光源计算的性能消耗明显优于forward管线，那么代价是什么呢？代价是deferred虽然可以一次性解决屏幕的所有物体渲染，不需要逐物体渲染；但是这个条件的前提是**你的Gbuffer可以迅速地从系统内存读取到计算单元中并作计算**。更别说你还没有开启MSAA（4xMSAA=从Gbuffer采样四次，带宽要求直接x4），TAA（从Framebuffer的时域采样，直接*n帧带宽）。
 
-另外，由于Gbuffer不会存储透明物体数据，因为<font style="color:rgb(44, 44, 54);">Deferred渲染的核心是</font>**<font style="color:rgb(44, 44, 54);">几何处理阶段</font>**<font style="color:rgb(44, 44, 54);">（Geometry Pass），将所有不透明物体的几何信息（如位置、法线、材质属性、深度）写入</font>**<font style="color:rgb(44, 44, 54);">G-Buffer</font>**<font style="color:rgb(44, 44, 54);">（多个渲染目标）。</font>
+另外，由于Gbuffer不会存储透明物体数据，因为Deferred渲染的核心是**几何处理阶段**（Geometry Pass），将所有不透明物体的几何信息（如位置、法线、材质属性、深度）写入**G-Buffer**（多个渲染目标）。
 
 也就是说，如果还要加一个透明处理，就意味着：
 

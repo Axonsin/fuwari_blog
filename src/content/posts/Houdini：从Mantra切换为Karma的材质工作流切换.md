@@ -65,17 +65,17 @@ Karma渲染
 
 MaterialX标准，我在Houdini官网上看了一下：
 
-> <font style="color:rgb(88, 90, 115);">MaterialX是一种开放源代码的标准，用于描述着色网络，旨在跨应用和渲染器之间实现材料的可移植性。通过UsdMaterialX插件，USD（Universal Scene Description）能够导入MaterialX着色器，而Houdini允许用户在VOP中构建MaterialX材质，并自动将其转换为UsdShade节点。尽管存在将VOP节点转换为.mtx文件的脚本，但Solaris主要支持作为USD prim的MaterialX节点。</font>
+> MaterialX是一种开放源代码的标准，用于描述着色网络，旨在跨应用和渲染器之间实现材料的可移植性。通过UsdMaterialX插件，USD（Universal Scene Description）能够导入MaterialX着色器，而Houdini允许用户在VOP中构建MaterialX材质，并自动将其转换为UsdShade节点。尽管存在将VOP节点转换为.mtx文件的脚本，但Solaris主要支持作为USD prim的MaterialX节点。
 >
 
 也就是说MaterialX是一个开放源代码的标准，**可以描述着色网络，并且被设计成可以在不同的应用程序和渲染器之间共享**。此外，Karma XPU不会支持传统基于VEX的着色器，由于优异的跨平台性，MaterialX是构建Karma渲染器的未来。
 
 ### 那要怎么切换为支持karma的材质？
-Karma的材质节点一般是以mtlx开头；比如说mtlxstandard__surface shader；_在这里<font style="color:rgb(44, 44, 54);">“mtlx”是MaterialX的文件扩展名，它是一种用于描述着色网络的开放源代码标准。在Solaris中，用户可以创建纯MaterialX材质或Karma中心化的材质。而Karma只支持体积材质，不支持表面和体积材质同时存在于同一个prim上。此外，Compositing节点也不受Karma支持。</font>
+Karma的材质节点一般是以mtlx开头；比如说mtlxstandard__surface shader；_在这里“mtlx”是MaterialX的文件扩展名，它是一种用于描述着色网络的开放源代码标准。在Solaris中，用户可以创建纯MaterialX材质或Karma中心化的材质。而Karma只支持体积材质，不支持表面和体积材质同时存在于同一个prim上。此外，Compositing节点也不受Karma支持。
 
 直接重命名方法**不可行**，因为节点类型不同，参数结构也不一样。但有几种批量替换的方法：
 
-## <font style="color:rgb(44, 44, 54);">推荐方法</font>
+## 推荐方法
 ### **方法1：再Material Network中使用Type Properties批量替换**
 ```plain
 1. 选中所有principled节点
@@ -169,10 +169,10 @@ for node in principled_nodes:
 ```
 
 ### **方法3：创建HDA (资产)**
-<font style="color:rgb(44, 44, 54);">创建一个包含mtlxstandard_surface的HDA，然后批量替换引用。</font>
+创建一个包含mtlxstandard_surface的HDA，然后批量替换引用。
 
-## <font style="color:rgb(44, 44, 54);">最实用的方法</font>
-**方法1**<font style="color:rgb(44, 44, 54);">是最简单的，Houdini会自动尝试参数映射。但是可能并不会替换完全。比如如下从principal切换为mtlx类型的材质出现报错：</font>
+## 最实用的方法
+**方法1**是最简单的，Houdini会自动尝试参数映射。但是可能并不会替换完全。比如如下从principal切换为mtlx类型的材质出现报错：
 
 ![](/images/posts/b7c881f2.png)
 
@@ -210,5 +210,5 @@ dispInput_* → displacement相关参数
 + `metallic` → `metalness`
 + `reflectint` → `specular`
 
-<font style="color:rgb(44, 44, 54);"></font>
+
 

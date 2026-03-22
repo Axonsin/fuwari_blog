@@ -73,5 +73,5 @@ uv安装：[https://docs.astral.sh/uv/getting-started/installation/#standalone-i
 
 [https://blender-mcp.com/trae-integration.html](https://blender-mcp.com/trae-integration.html)
 
-**<font style="color:#DF2A3F;">挂街示众，两个都是错的</font>**
+**挂街示众，两个都是错的**
 
