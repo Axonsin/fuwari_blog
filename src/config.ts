@@ -17,11 +17,11 @@ export const siteConfig: SiteConfig = {
 	},
 	banner: {
 		enable: true, // Display a banner image on the top of the homepage and post pages
-		src: "assets/images/demo-banner.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
+		src: "assets/images/generated_image_1.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 		position: "center", // Equivalent to object-position, only supports 'top', 'center', 'bottom'. 'center' by default
 		credit: {
-			enable: false, // Display the credit text of the banner image
-			text: "", // Credit text to be displayed
+			enable: true, // Display the credit text of the banner image
+			text: "Axon, ComfyUI-NoobXL", // Credit text to be displayed
 			url: "", // (Optional) URL link to the original artwork or artist's page
 		},
 	},
@@ -55,7 +55,7 @@ export const navBarConfig: NavBarConfig = {
 export const profileConfig: ProfileConfig = {
 	avatar: "assets/images/image-avatar.png", // Relative to the /src directory. Relative to the /public directory if it starts with '/'
 	name: "Axon",
-	bio: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+	bio: "Shooting the stars",
 	links: [
 		{
 			name: "Twitter",
@@ -72,7 +72,7 @@ export const profileConfig: ProfileConfig = {
 		{
 			name: "GitHub",
 			icon: "fa6-brands:github",
-			url: "https://github.com/Axonsin"
+			url: "https://github.com/Axonsin",
 		},
 	],
 };
