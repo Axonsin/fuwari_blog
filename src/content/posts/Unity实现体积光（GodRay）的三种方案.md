@@ -2,6 +2,7 @@
 title: Unity实现体积光（GodRay）的三种方案
 published: 2025-01-24
 description: Unity中实现体积光效果的三种不同方案对比
+category: Unity相关&随记
 ---
 
 ### **Unity中实现体积光的三种方式**

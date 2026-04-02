@@ -2,6 +2,7 @@
 title: 如何使用TRAE调用Blender-MCP
 published: 2025-07-11
 description: 详细介绍如何配置TRAE与Blender MCP的集成使用方法
+category: 依旧AI
 ---
 
 > 为什么我要记下这个东西？实际上是因为TRAE太sb了，自己修改开源社区的方案扔到自己的火山引擎上。你说和腾讯云那样开个社区讨论就也还行，你社区又不开，README都不写，和Cursor又不一样（美名其曰差异化），居然还要Blender MCP官方来写个文档，居然还是错的。真tm 360全方位立体防卫是吗

@@ -2,6 +2,7 @@
 title: TBDR vs. IMR
 published: 2025-07-05
 description: 深入分析TBDR和IMR两种GPU渲染架构的特点与选择
+category: 图形学
 ---
 
 ### 写在前面

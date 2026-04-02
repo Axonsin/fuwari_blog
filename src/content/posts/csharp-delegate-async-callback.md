@@ -2,6 +2,7 @@
 title: "C#：委托和异步回调"
 published: 2025-07-09
 description: "C#：委托和异步回调的详细介绍和使用方法"
+category: Unity相关&随记
 ---
 
 # 委托和回调

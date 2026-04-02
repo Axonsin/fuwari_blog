@@ -2,6 +2,7 @@
 title: Yuque Exporter使用说明
 published: 2025-03-03
 description: Git项目中.gitignore文件的配置方法
+category: 朝花夕拾
 ---
 
 这个脚本的核心任务是：

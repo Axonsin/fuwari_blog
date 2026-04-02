@@ -2,6 +2,7 @@
 title: Blender导入场景进入Unity
 published: 2024-12-26
 description: Blender模型导入Unity的完整工作流程
+category: Unity相关&随记
 ---
 
 首先先搬上链接：

@@ -2,6 +2,7 @@
 title: 《碧蓝航线》：互动宿舍逆向
 published: 2025-07-14
 description: Git项目中.gitignore文件的配置方法
+category: 图形学
 ---
 
 ## 1. **基本信息**

@@ -2,6 +2,7 @@
 title: 用Global Hook抓取Steam游戏
 published: 2025-07-13
 description: 用Global Hook抓取Steam游戏的技术原理和应用
+category: Unity相关&随记
 ---
 
 [https://zhuanlan.zhihu.com/p/534821939](https://zhuanlan.zhihu.com/p/534821939)

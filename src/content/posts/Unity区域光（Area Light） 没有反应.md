@@ -2,6 +2,7 @@
 title: Unity区域光（Area Light） 没有反应
 published: 2025-02-09
 description: Unity区域光（Area Light） 没有反应的技术原理和应用
+category: Unity相关&随记
 ---
 
 确认被照射的物体是否勾选了`static`属性。

@@ -2,6 +2,7 @@
 title: 无厚度_低厚度的zfighting问题
 published: 2025-01-06
 description: Blender模型导入Unity的完整工作流程
+category: 图形学
 ---
 
 最近在水qq群的时候遇到了一个问题：无厚度的披风zfighting问题。

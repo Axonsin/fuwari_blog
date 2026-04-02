@@ -2,6 +2,7 @@
 title: Houdini中的Enforce Unique Name Attribute per instance
 published: 2025-05-10
 description: Houdini中的Enforce Unique Name Attribute per instance的解决方案和处理方法
+category: Houdini
 ---
 
 __在Houdini中，`Copy to Points` (复制到点) 等节点在进行几何体实例化时，有一个非常重要的选项叫做 **"Enforce Unique Name Attribute per instance"**（为每个实例强制生成唯一名称属性）。

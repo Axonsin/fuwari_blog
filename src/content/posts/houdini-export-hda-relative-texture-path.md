@@ -2,6 +2,7 @@
 title: Houdini导出hda时，纹理调用使用相对路径
 published: 2025-08-11
 description: Houdini中使用相对路径的最佳实践
+category: Houdini
 ---
 
 一般来说，Houdini在拖入纹理的时候会直接调取绝对路径(C://Users//......)

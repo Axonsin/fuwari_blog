@@ -2,6 +2,7 @@
 title: Unity渲染队列和渲染层级的区别
 published: 2025-08-05
 description: Unity渲染队列和渲染层级的区别的技术原理和应用
+category: Unity相关&随记
 ---
 
 ## Render Queue（渲染队列）

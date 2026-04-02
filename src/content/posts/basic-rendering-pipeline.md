@@ -2,6 +2,7 @@
 title: 基本渲染管线
 published: 2025-01-27
 description: 基本渲染管线的技术原理和应用
+category: 图形学
 ---
 
 ![渲染的基本结构](/images/posts/46b632a3.png)

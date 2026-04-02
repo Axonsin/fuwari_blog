@@ -2,6 +2,7 @@
 title: 重生之我在OBS写Shader——OBS ShaderFilter插件
 published: 2025-06-30
 description: 在OBS中使用ShaderFilter插件创建自定义视觉效果
+category: 朝花夕拾
 ---
 
 OBS ShaderFilter是一个可以使用HLSL/GLSL对图层进行处理的插件，而且内部会有很多OBS原生并不会带有的滤镜，比如box模糊和一堆搞怪滤镜。[https://obsproject.com/forum/resources/obs-shaderfilter.1736/](https://obsproject.com/forum/resources/obs-shaderfilter.1736/)

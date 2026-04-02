@@ -2,6 +2,7 @@
 title: HDRP的曝光流程和实现
 published: 2025-07-03
 description: 详解Unity HDRP中的物理相机曝光流程和实现原理
+category: 图形学
 ---
 
 现代很多的PBR游戏，大家首先关注的是PBR的材质，但是实际上PBR( Physically-Based Rendering )流程除了基于物理的材质模型，还由另外两部分组成，一个是物理光照，另外一个是物理相机。

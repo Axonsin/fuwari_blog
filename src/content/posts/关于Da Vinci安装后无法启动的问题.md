@@ -2,6 +2,7 @@
 title: 关于Da Vinci安装后无法启动的问题
 published: 2025-02-24
 description: 关于Da Vinci安装后无法启动的问题的解决方案和处理方法
+category: Unity相关&随记
 ---
 
 具体的情况是：在安装了20并且patch了激活证之后，不论是E盘还是C盘，**在打开Davinci都会出现在加载插件部分闪退，但是任务管理器中的后台任务仍然存活**

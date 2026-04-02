@@ -2,6 +2,7 @@
 title: Unity阴影实现
 published: 2025-02-07
 description: Unity阴影实现的解决方案和处理方法
+category: Unity相关&随记
 ---
 
 > _Investigate how Unity renders shadows.  

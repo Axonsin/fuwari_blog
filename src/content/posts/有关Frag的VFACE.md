@@ -6,7 +6,7 @@ category: Unity相关&随记
 
 这是 HLSL/ShaderLab（Unity HDRP/URP 里常见） 的片元着色器（fragment shader）函数签名。
 
-```Plain Text
+```text
 half4 OceanMainFrag(Varyings input, float facing : VFACE) : SV_Target
 ```
 
@@ -36,7 +36,7 @@ Unity 里常用写法（兼容一些平台差异）是把它当成“是否正�
 ### 常见用途
 
 
-```Plain Text
+```text
 float isFrontFace = (facing > 0.0);float3 N = normalize(input.normalWS);N = isFrontFace ? N : -N;
 ```
 

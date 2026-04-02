@@ -25,7 +25,7 @@ shader_feature_local 会同时为 顶点阶段和片元阶段 都生成对应的
 ## 用法示例
 
 
-```Plain Text
+```text
 #pragma shader_feature_local_fragment _EFFECT_ON _EFFECT_OFF// 顶点着色器 —— 不会因为上述关键字产生额外变体v2f vert(appdata v){    // ...}// 片元着色器 —— 关键字仅在此生效fixed4 frag(v2f i) : SV_Target{    fixed4 col = tex2D(_MainTex, i.uv);    #if defined(_EFFECT_ON)        col *= _TintColor; // 仅在开启时执行    #endif    return col;}
 ```
 

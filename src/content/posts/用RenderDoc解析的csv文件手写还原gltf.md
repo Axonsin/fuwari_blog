@@ -2,6 +2,7 @@
 title: 用RenderDoc解析的csv文件手写还原gltf
 published: 2026-02-22
 description: 怎么利用renderdoc还原出模型原来的结构
+category: Unity相关&随记
 ---
 
 > 写这篇的时候是因为我的一个项目此前一直是直接解析csv的数据写成renderdoc的json的, 但是未来要加入更多的材质参数和解析gltf的node节点. 要换成pygltf库, 但是之前手写的又不想放弃, 遂放进一个blog中作为知识点记录了(

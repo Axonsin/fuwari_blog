@@ -2,6 +2,7 @@
 title: Unity Bones Retargeting系统
 published: 2025-06-11
 description: Unity骨骼动画Retargeting的配置方法和注意事项
+category: Unity相关&随记
 ---
 
 > 前置可选条件：package manager中加入了Animation Rigging（骨骼可视化Bone Renderer）和MMD4Macanim（用于把pmx转换为fbx）

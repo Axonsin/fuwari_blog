@@ -2,6 +2,7 @@
 title: Name.com配合CloudFlare实现极空间的ddns托管域名
 published: 2025-01-03
 description: 通过Name.com配合CloudFlare实现极空间的ddns托管域名
+category: 朝花夕拾
 ---
 
 # 关于注册域名

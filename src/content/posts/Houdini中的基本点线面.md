@@ -2,6 +2,7 @@
 title: Houdini中的基本点线面
 published: 2025-07-08
 description: Houdini中Points、Vertices、Primitives、Polygons的基本概念和区别
+category: Houdini
 ---
 
 当fbx模型导入到Houdini的时候，会产生最基本的四个Class（或者说来自于fbx本身就是这四个Class）：

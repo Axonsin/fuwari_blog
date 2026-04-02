@@ -2,6 +2,7 @@
 title: EXR vs. PNG
 published: 2025-07-03
 description: EXR vs. PNG的原理解析和实现方法
+category: 图形学
 ---
 
 ### **1. "贴图格式一般用 TGA"**

@@ -1,13 +1,13 @@
 ---
 title: Github拒绝推送大文件分支
 published: 2025-03-27
-category: Unity相关&随记
+category: 朝花夕拾
 ---
 
 在本地git完后准备推送的时候，有时候会报错Github不接受单个100MB以上的大文件。这时候需要逐步分析大文件并进行逐一排查。
 查看该仓库中存在的大文件：
 
-```git
+```text
 git rev-list --objects --all | git cat-file --batch-check='%(objectname) %(objecttype) %(size)' | sort -k 3 -n -r | head -n 10
 ```
 
@@ -23,14 +23,14 @@ git lfs支持将指定类型的大文件做处理（如指定zip、rar等），�
 git filter-repo是一个屏蔽/删除工具,可以定向清除指定的文件夹和文件并可以对分支中的所有版本生效。
 在git中安装：
 
-```git
+```text
 pip install git-filter-repo
 ```
 
 
 然后指定文件夹/文件并删除（这里以插件文件夹为例）：
 
-```git
+```text
 git filter-repo --path plugins/large_file.zip --invert-paths
 ```
 

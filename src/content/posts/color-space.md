@@ -2,6 +2,7 @@
 title: 色彩空间
 published: 2025-01-23
 description: 色彩空间的原理解析和实现方法
+category: 图形学
 ---
 
 # 引言

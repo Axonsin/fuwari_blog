@@ -23,14 +23,14 @@ https://www.vulkan.org/tools#download-these-essential-development-tools
 放这里这个目录本身，不要再加 bin 子目录。
 也就是截图里的这种填法：
 
-```Plain Text
+```text
 C:\VulkanSDK\1.4.341.1
 ```
 
 
 而不是：
 
-```Plain Text
+```text
 C:\VulkanSDK\1.4.341.1\Bin
 ```
 
