@@ -1,6 +1,7 @@
 ---
 title: Raw Depth, Linear Depth, Normalized Depth(归一化深度)
 published: 2025-11-18
+category: 渲染
 ---
 
 最近在为正交相机的shader做深度适配的时候遇到了这么一段

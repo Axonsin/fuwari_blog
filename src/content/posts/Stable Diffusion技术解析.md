@@ -1,6 +1,7 @@
 ---
 title: Stable Diffusion技术解析
 published: 2025-08-17
+category: 依旧AI
 ---
 
 

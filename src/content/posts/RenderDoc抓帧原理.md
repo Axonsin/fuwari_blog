@@ -1,6 +1,7 @@
 ---
 title: RenderDoc抓帧原理
 published: 2025-12-22
+category: 图形学
 ---
 
 RenderDoc抓帧原理

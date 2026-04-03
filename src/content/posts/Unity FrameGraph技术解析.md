@@ -1,6 +1,7 @@
 ---
 title: Unity FrameGraph技术解析
 published: 2025-08-24
+category: 依旧AI
 ---
 
 

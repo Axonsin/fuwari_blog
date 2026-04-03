@@ -1,6 +1,7 @@
 ---
 title: Ollama本地AI
 published: 2025-08-27
+category: 依旧AI
 ---
 
 

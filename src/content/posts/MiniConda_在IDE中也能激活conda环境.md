@@ -1,6 +1,7 @@
 ---
 title: MiniConda:在IDE中也能激活conda环境
 published: 2025-10-26
+category: 疑难杂症
 ---
 
 

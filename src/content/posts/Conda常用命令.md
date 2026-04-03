@@ -1,6 +1,7 @@
 ---
 title: Conda常用命令
 published: 2025-11-03
+category: 依旧AI
 ---
 
 
