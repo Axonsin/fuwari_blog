@@ -1,6 +1,7 @@
 ---
 title: 入门并创建一个React-TS-Vite项目
 published: 2026-01-26
+category: 朝花夕拾
 ---
 
 
@@ -10,7 +11,7 @@ published: 2026-01-26
 大概的起因是我有一个用到了babylon js的一个模型查看器. ai给我写了一个基于qrc资源文件引用的html+js.
 但是我看了一下, 对于后续开发似乎不是很友好啊, 下了一个js, 缓存到文件本地, 然后再用css和html来构建页面, 用js来做交互响应; 大致结构是这样
 
-![image.png](images/rwlnen63s883kqhe_image_00.png)
+![image.png](/images/posts/rwlnen63s883kqhe_image_00.png)
 
 
 不太对啊, 那么假如说我要自己写一个前端ui那我能怎么办呢? 虽然能展示出来, 但是对于ui构建十分不利. 每次都要开一边 python main.py 再点点点, 激活html. 这样非常不顺手. 所以干脆看一下标准的前端开发流程了. 热更新, 代码库, 框架啥的直接一把梭哈,

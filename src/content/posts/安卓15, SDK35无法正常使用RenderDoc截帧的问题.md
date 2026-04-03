@@ -1,14 +1,15 @@
 ---
 title: 安卓15, SDK35无法正常使用RenderDoc截帧的问题
 published: 2026-01-27
+category: 图形学
 ---
 
 疑似还需要:
 
-![image.png](images/nil6du233fso53to_image_00.png)
+![image.png](/images/posts/nil6du233fso53to_image_00.png)
 
 
-![image.png](images/nil6du233fso53to_image_01.png)
+![image.png](/images/posts/nil6du233fso53to_image_01.png)
 
 
 - ro.force.debuggable=1 ← 关键属性

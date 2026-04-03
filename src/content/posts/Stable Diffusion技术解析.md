@@ -13,7 +13,7 @@ published: 2025-08-17
 Stable Diffusion 是一款免费、开源的 AI 图像生成器。于 2022 年 8 月推出，应用于 AI 软件，用户可以随意输入自己想要的内容，然后系统就会自动生成非常优秀的艺术渲染作品。
 Stable Diffusion 的生成系统由现有艺术作品组成的巨大数据库训练而成，能够快速生成与提示信息有所关联的新奇图像。
 
-![](images/bpeo4ix2bz4copxo_image_00.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_00.svg)
 
 
 ## SD 的各个版本对比
@@ -41,14 +41,14 @@ Stable Diffusion 的生成系统由现有艺术作品组成的巨大数据库训
 
 参考资料:
 
-![](images/bpeo4ix2bz4copxo_image_01.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_01.svg)
 
 
 【大白话01】一文理清 Diffusion Model 扩散模型 | 原理图解+公式推导_哔哩哔哩_bilibili
 https://www.youtube.com/watch?v=1CIpzeNxIhU
 https://www.youtube.com/watch?v=iv-5mZ_9CPY
 
-![output.png](images/bpeo4ix2bz4copxo_image_02.png)
+![output.png](/images/posts/bpeo4ix2bz4copxo_image_02.png)
 
 
 ### 几个概念
@@ -57,7 +57,7 @@ https://www.youtube.com/watch?v=iv-5mZ_9CPY
 ### Step 1: Text-to-Image Initialization
 
 
-![output (1).png](images/bpeo4ix2bz4copxo_image_03.png)
+![output (1).png](/images/posts/bpeo4ix2bz4copxo_image_03.png)
 
 
 Stable Diffusion 首先在潜在空间中生成一个随机张量。这个张量由随机数生成器的种子 Seed 决定，它代表了图像在潜在形式下的表示，尽管在这个阶段它看起来像是噪声。
@@ -65,7 +65,7 @@ Stable Diffusion 首先在潜在空间中生成一个随机张量。这个张量
 ### Step 2: Noise Prediction
 
 
-![output (2).png](images/bpeo4ix2bz4copxo_image_04.png)
+![output (2).png](/images/posts/bpeo4ix2bz4copxo_image_04.png)
 
 
 噪声预测器 U-Net 输入这个潜在的有噪声的图像和提供的文本提示。然后，它也在潜在空间中预测噪声。
@@ -75,7 +75,7 @@ Stable Diffusion 首先在潜在空间中生成一个随机张量。这个张量
 
 具体来说，Stable Diffusion 的正向扩散过程会在潜在图像上不断添加噪声，使其变成完全随机的张量。而逆向扩散过程则是通过 Noise Subtraction 来逐步去除噪声，将噪声图转换为有意义的图像。
 
-![output (3).png](images/bpeo4ix2bz4copxo_image_05.png)
+![output (3).png](/images/posts/bpeo4ix2bz4copxo_image_05.png)
 
 
 在逆向扩散中，Stable Diffusion 使用了一个专门训练的噪声预测器（U-Net）来预测每一步添加的噪声。然后，将预测的噪声从当前的潜在图像中减去，得到一个新的潜在图像。步骤 2 和 3 会重复进行预先确定的采样步数 steps，通常约为 20 次迭代。
@@ -83,7 +83,7 @@ Stable Diffusion 首先在潜在空间中生成一个随机张量。这个张量
 ### Step 4: Decoding
 
 
-![output (4).png](images/bpeo4ix2bz4copxo_image_06.png)
+![output (4).png](/images/posts/bpeo4ix2bz4copxo_image_06.png)
 
 
 最后一步涉及 VAE 解码器，它将潜在图像转换回像素空间，生成最终的 AI 生成图像。
@@ -99,12 +99,12 @@ comfyui 可以自定义工作流，可玩性更高，后面以 comfyui 为例介
 
 工作流是由一个一个节点进行连接工作的。
 
-![ComfyUI_00052_.png](images/bpeo4ix2bz4copxo_image_07.png)
+![ComfyUI_00052_.png](/images/posts/bpeo4ix2bz4copxo_image_07.png)
 
 
 拖入上面的图到comfyui即可（如果没有被压缩的话）
 
-![output (5).png](images/bpeo4ix2bz4copxo_image_08.png)
+![output (5).png](/images/posts/bpeo4ix2bz4copxo_image_08.png)
 
 
 ### 模型
@@ -122,7 +122,7 @@ Negative prompt 用于指定你不希望在生成的图像中出现的元素或�
 使用 negative prompt 可以帮助你更精确地控制生成结果，提高图像的质量和相关性。
 Clip Text Encode 的节点输入是模型的 CLIP。
 
-![image.png](images/bpeo4ix2bz4copxo_image_09.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_09.png)
 
 
 ### Image Width/Height
@@ -132,7 +132,7 @@ Clip Text Encode 的节点输入是模型的 CLIP。
 在文生图中，是一个空白的 Latent Image。
 在图生图则需要加载图片作为初始 Latent。
 
-![image.png](images/bpeo4ix2bz4copxo_image_10.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_10.png)
 
 
 ### Sampler
@@ -140,13 +140,13 @@ Clip Text Encode 的节点输入是模型的 CLIP。
 
 Sampler 是整个算法的核心。
 
-![image.png](images/bpeo4ix2bz4copxo_image_11.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_11.png)
 
 
-![image.png](images/bpeo4ix2bz4copxo_image_12.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_12.png)
 
 
-![image.png](images/bpeo4ix2bz4copxo_image_13.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_13.png)
 
 
 ### Sampler/Scheduler
@@ -156,7 +156,7 @@ Sampler（采样器）:
 采样器的主要作用是:
 不同的采样器采用不同的算法和方法来执行这个过程，如 Euler、Heun、DDIM 等。采样器的选择会影响生成速度和图像质量。
 
-![image.png](images/bpeo4ix2bz4copxo_image_14.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_14.png)
 
 
 例如：
@@ -164,7 +164,7 @@ Scheduler（调度器）:
 调度器的主要作用是:
 调度器通常与采样器配对使用。某些采样器可能更适合特定类型的调度器。
 
-![image.png](images/bpeo4ix2bz4copxo_image_15.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_15.png)
 
 
 例如：
@@ -177,7 +177,7 @@ LORA 是一种在消耗更少内存的情况下，加速大型模型训练的训
 LORA 模型是小型的 stable diffusion 模型，对 checkpoint 模型 cross-attention layers (交叉注意力层）进行了较小的更改，但是它的体积只有 checkpoint 的 1/100 到 1/10，文件大小一般在 2-500MB 之间。
 主要有以下特点和使用建议:
 
-![image.png](images/bpeo4ix2bz4copxo_image_16.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_16.png)
 
 
 例如：
@@ -190,7 +190,7 @@ Hires fix 是 Stable Diffusion 中一个用于生成高质量高分辨率图像�
 Hires fix 的工作流程如下:
 优势:
 
-![image.png](images/bpeo4ix2bz4copxo_image_17.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_17.png)
 
 
 例如：
@@ -208,7 +208,7 @@ ControlNet 是 Stable Diffusion 的一个重要扩展功能，它可以让用户
 ControlNet 允许用户通过提供参考图像或条件来引导 Stable Diffusion 的图像生成过程。它可以控制生成图像的姿势、构图、轮廓等细节。
 例如：
 
-![image.png](images/bpeo4ix2bz4copxo_image_18.png)
+![image.png](/images/posts/bpeo4ix2bz4copxo_image_18.png)
 
 
 canny openpose scribbles
@@ -223,7 +223,7 @@ StableDiffusion 是基于模型文件来做图像生成，模型是 SD 的核心
 模型文件很大，比如 SD1.5 的模型文件大概是 2G，SDXL 的模型文件大小是 6G 甚至更大。
 大文件的加载往往是一个比较费时间的操作。webui 使用模型文件的大体逻辑如下，假设要加载的模型为 ModelA:
 
-![](images/bpeo4ix2bz4copxo_image_19.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_19.svg)
 
 
 其中将 ModelA 加载到内存是一个很耗时的动作，为了保证线上的性能，需要尽可能减少模型切换。
@@ -233,12 +233,12 @@ StableDiffusion 是基于模型文件来做图像生成，模型是 SD 的核心
 
 为了减少模型切换的成本消耗问题，采用的实现方案是分模型创建 PSM 服务，即一个 PSM 服务只提供一种模型文件，通过 PSM 和模型的映射关系，由上层 Proxy 跟进模型进行请求分发。
 
-![](images/bpeo4ix2bz4copxo_image_20.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_20.svg)
 
 
 这种模式存在利用率的问题：
 
-![](images/bpeo4ix2bz4copxo_image_21.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_21.svg)
 
 
 为了提高机器的利用率，需要进一步对资源进行调度优化。只有根据负载做合理分配，才能达到优化资源使用、最大化吞吐率、最小化响应时间、同时避免过载的目的。
@@ -249,7 +249,7 @@ StableDiffusion 是基于模型文件来做图像生成，模型是 SD 的核心
 由于模型切换成本高（不然模型实时加载，按空闲分配就可以），我们需要对机器按需分配来提高机器的利用率，即请求量大的模型多分配点机器，请求量小的少分配机器或者不分配机器。
 我们的方案是根据模型流量比例来自动调节对应的机器比例，要保证模型切换的成本和流量分布的平衡。
 
-![](images/bpeo4ix2bz4copxo_image_22.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_22.svg)
 
 
 通过定时任务进行调度，每 3 分钟轮询一次，每次调度都会根据当前排队的模型进行按流量比例分配。同时，在服务启动时，调度器会随机分配一个模型，以确保服务启动时可用。
@@ -267,7 +267,7 @@ Proxy 根据请求中的模型名称，获取机器列表，然后过频控和�
 ### 交互过程：调度器负责根据实际流量对机器进行模型调度，以满足请求量大的模型分配更多实例的需求
 
 
-![](images/bpeo4ix2bz4copxo_image_23.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_23.svg)
 
 
 ### 在线请求的处理流程如下
@@ -278,7 +278,7 @@ Proxy 根据请求中的模型名称，获取机器列表，然后过频控和�
 
 冷启动: 模型如果没有在内存中，第一次文生图的时候会把模型加载到内存再执行，这个加载过程比较慢，基本在分钟级别。
 
-![](images/bpeo4ix2bz4copxo_image_24.svg)
+![](/images/posts/bpeo4ix2bz4copxo_image_24.svg)
 
 
 之前的方案是使用了懒汉模式，即在调度过程只是分配模型，模型的加载过程发生在切换之后的第一次文生图请求中，这就会导致第一次的请求的耗时会变得很长。

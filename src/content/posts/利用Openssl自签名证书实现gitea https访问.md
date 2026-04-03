@@ -1,6 +1,7 @@
 ---
 title: 利用Openssl自签名证书实现gitea https访问
 published: 2025-10-21
+category: 朝花夕拾
 ---
 
 
@@ -18,7 +19,7 @@ published: 2025-10-21
 需要在电脑上安装 OpenSSL。Windows 10/11 通常可以通过 WSL (Windows Subsystem for Linux) 或 Git Bash 自带 OpenSSL。macOS 和 Linux 系统则通常会预装。
 Windows下载编译包：https://slproweb.com/products/Win32OpenSSL.html
 
-![image.png](images/eobherymmd5dmx6v_image_00.png)
+![image.png](/images/posts/eobherymmd5dmx6v_image_00.png)
 
 
 明明和导入证书里的域名一模一样但还还是会包CommonName不匹配
@@ -33,7 +34,7 @@ openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 3650 -nod
 ### 步骤二：将证书上传到 NAS 并放置到指定位置
 
 
-![image.png](images/eobherymmd5dmx6v_image_01.png)
+![image.png](/images/posts/eobherymmd5dmx6v_image_01.png)
 
 
 ### 步骤三：修改 Docker 配置以挂载证书目录

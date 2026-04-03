@@ -64,7 +64,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 现在，当您在VS Code的PowerShell终端中运行 conda activate your_env 时，profile.ps1 应该能够被成功加载，Conda的环境初始化脚本也会随之运行。这意味着：
 
-![image.png](images/dsf8s7736vfxyz04_image_00.png)
+![image.png](/images/posts/dsf8s7736vfxyz04_image_00.png)
 
 
 请注意： 即使在终端中 python --version 仍然显示系统版本（这在某些复杂的PATH配置下偶尔会发生），只要按照之前提供的步骤，在VS Code中通过 Python: Select Interpreter 明确选择了Conda环境的Python解释器，VS Code的运行和调试功能仍然会使用您指定的Conda环境。解决执行策略问题主要是为了让终端环境也能够正确地工作，提供一致的体验。

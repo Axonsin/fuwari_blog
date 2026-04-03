@@ -11,15 +11,15 @@ published: 2025-12-08
 插件基于的原地址是mod常用的3Dmigoto: https://github.com/bo3b/3Dmigoto/releases
 在编辑RenderDoc的ShaderViewer中的Command时, 注意在RenderDoc中填写Command Line {input_file} {output_file}的时候中间的空格, 不然会报错!
 
-![image.png](images/psuvnxn9r9q5se84_image_00.png)
+![image.png](/images/posts/psuvnxn9r9q5se84_image_00.png)
 
 
-![image.png](images/psuvnxn9r9q5se84_image_01.png)
+![image.png](/images/posts/psuvnxn9r9q5se84_image_01.png)
 
 
 附: 可用的资源(其实就是只有原版能用)
 
-![image.png](images/psuvnxn9r9q5se84_image_02.png)
+![image.png](/images/posts/psuvnxn9r9q5se84_image_02.png)
 
 
 如果依赖有问题的话可以尝试用Dependencies这个项目进行依赖分析. 我猜大概率是缺少了dx3d的dll导致的依赖错误.

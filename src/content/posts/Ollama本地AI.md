@@ -12,7 +12,7 @@ published: 2025-08-27
 
 https://ollama.com/
 
-![image.png](images/ewwmytw2maasaleq_image_00.png)
+![image.png](/images/posts/ewwmytw2maasaleq_image_00.png)
 
 
 Ollama 是一个在本地运行大语言模型（LLMs）的工具和平台。它的目标是让用户能够像调用 API 一样，直接在个人电脑(主要是 macOS)上运行和管理大语言模型，而不依赖云端。  简单来说，就是一个大模型的Docker。

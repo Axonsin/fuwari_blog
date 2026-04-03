@@ -1,6 +1,7 @@
 ---
 title: 为GitHub Copilot Cli和所有的nodejs配备本地代理服务
 published: 2026-01-18
+category: 朝花夕拾
 ---
 
 虽然代理软件有虚拟网卡功能, 但有时候我会使用copilot进行异步处理(比如有时候我想打游戏, 然后copilot在后面修bug); 那游戏肯定不能用TUN模式啊, 卡的批爆; 得用游戏加速器才行;
@@ -38,7 +39,7 @@ $env:NODE_USE_ENV_PROXY="1"$env:HTTP_PROXY="http://127.0.0.1:7897"$env:HTTPS_PRO
 
 这是环境贡献命令, 具体操作如下, 要在每次调用copilot之前指定一下env:
 
-![image.png](images/howy5sgl3e1abivv_image_00.png)
+![image.png](/images/posts/howy5sgl3e1abivv_image_00.png)
 
 
 少截图了一个指令, 首先要$env:NODE_USE_ENV_PROXY="1"
@@ -49,7 +50,7 @@ setup-nodejs-proxy.bat(1 KB)
 test-proxy.js(3 KB)
 然后就可以愉快的进行异步处理了
 
-![image.png](images/howy5sgl3e1abivv_image_01.png)
+![image.png](/images/posts/howy5sgl3e1abivv_image_01.png)
 
 
 ## 引用

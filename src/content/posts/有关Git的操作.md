@@ -1,6 +1,7 @@
 ---
 title: 有关Git的操作
 published: 2025-09-20
+category: 依旧AI
 ---
 
 

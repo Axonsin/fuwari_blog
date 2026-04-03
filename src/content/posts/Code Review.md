@@ -53,7 +53,7 @@ https://www.bilibili.com/opus/743259329311801348
 ## 对SRP渲染管线进行添加的功能处理
 
 
-![](/images/posts/yuque-temp/image_00.png)
+![](/images/posts/image_00.png)
 
 
 URP | 后处理-自定义后处理 - 哔哩哔哩

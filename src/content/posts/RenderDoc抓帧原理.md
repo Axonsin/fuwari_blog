@@ -20,7 +20,7 @@ RenderDoc抓帧原理
 # 抓帧流程
 
 
-![image.png](images/dlslk40lp0fsl9sc_image_00.png)
+![image.png](/images/posts/dlslk40lp0fsl9sc_image_00.png)
 
 
 # 核心模块
@@ -32,7 +32,7 @@ RenderDoc抓帧原理
 ### 什么是GLES Layers？
 
 
-![image.png](images/dlslk40lp0fsl9sc_image_01.png)
+![image.png](/images/posts/dlslk40lp0fsl9sc_image_01.png)
 
 
 ### 如何制作一个GLES Layer
@@ -166,7 +166,7 @@ The replay process is ostensibly simple, but as with the capturing the devil is 
 > RenderDoc then does an initial pass over the captured frame. This allows us to build up a list of all the actions, analyse dependencies and check which resources are used at each action for read, write, and so on. An internal tree is built up similar to what you see in the Event Browser & API Inspector, as well as a linked list with the linear sequence of actions, since both representations are useful for iterating over the frame.
 
 
-![](images/dlslk40lp0fsl9sc_image_02.jpeg)
+![](/images/posts/dlslk40lp0fsl9sc_image_02.jpeg)
 
 
 ```cpp

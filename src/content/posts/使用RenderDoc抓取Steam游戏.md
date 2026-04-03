@@ -1,6 +1,7 @@
 ---
 title: 使用RenderDoc抓取Steam游戏
 published: 2026-01-15
+category: 图形学
 ---
 
 https://zhuanlan.zhihu.com/p/534821939
@@ -18,7 +19,7 @@ Steam最近可能更新了一下启动的方式, 直接从exe或者用global hoo
 最近我有需要对Steam的一些游戏进行截帧, 我研究了一下, Steam换了一个验证方式: 如果尝试直接从游戏路径的exe打开, 游戏一开始会正常运行, 左上角也有RenderDoc Capturing的标记, 但是马上就会闪退. 随后跳转到steam进行验证, 验证完毕之后直接再开一个新的进程实例.似乎是因为pid不一致所以在第二次启动的时候, RenderDoc就不可以正常抓帧了. 即" 先能注入→立刻退出→Steam重新拉起干净进程”
 这个情况似乎叫做二跳?我不知道G胖是不是故意这么搞的, 但是还是有解决办法的, 就是改为直接启动Steam, 用子进程注入识别(在Capture Options中勾选这个选项)到通过Steam启动的游戏:
 
-![image.png](images/qqcog0eg6rlxkc85_image_00.png)
+![image.png](/images/posts/qqcog0eg6rlxkc85_image_00.png)
 
 
 直接选中Steam.exe的执行路径(不是快捷方式), 然后勾选"捕获子进程". 接着直接点击启动 (注意, 启动之前不要留有任何steam的后台, 要进任务管理器强行杀掉所有有关steam的子进程, 直接退出steam有时候不会退出子进程).
@@ -28,7 +29,7 @@ Steam最近可能更新了一下启动的方式, 直接从exe或者用global hoo
 > 然后截帧保存的路径仍然在之前这篇文章开头说的那个Local那里的文件保存路径, 因为RenderDoc没变
 
 
-![image.png](images/qqcog0eg6rlxkc85_image_01.png)
+![image.png](/images/posts/qqcog0eg6rlxkc85_image_01.png)
 
 
 最后附上一张成功的图片

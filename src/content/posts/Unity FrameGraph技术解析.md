@@ -44,7 +44,7 @@ Frame Graph 的魔力源于其声明式的API和对渲染流程的抽象。
 
 依赖关系是 Frame Graph 构建图的基石。开发者在定义一个 Pass 时，必须明确声明它会读取哪些逻辑资源，写入或修改哪些逻辑资源。
 
-![](images/xn610ewoerldlkn6_image_00.svg)
+![](/images/posts/xn610ewoerldlkn6_image_00.svg)
 
 
 这个图中，LightingPass 依赖 DepthPrePass 和 GBufferPass 的输出。Frame Graph 会自动推断出：
@@ -154,4 +154,4 @@ Frame Graph 并非银弹，但它是现代图形引擎应对日益复杂的渲�
 > 实践建议：不要试图一蹴而就。可以从一个简单的后处理链（如 Bloom -> Tonemapping -> FXAA）开始，为它构建一个迷你的 Frame Graph。成功后，再逐步将主摄像机的渲染、阴影系统等模块迁移进来。始终利用可视化工具来观察你的图和资源分配，这会让你事半功倍。
 
 
-![](images/xn610ewoerldlkn6_image_01.svg)
+![](/images/posts/xn610ewoerldlkn6_image_01.svg)
