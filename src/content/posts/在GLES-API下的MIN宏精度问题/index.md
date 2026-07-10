@@ -89,7 +89,30 @@ float safeWeight = max(weight, 0.00006);
 剩下的都是addpass的源码, ctrl f替换文本把宏全部替换一下就i好了
 
 有关这个问题我问了一下AI, AI的回答是:
+# AI回答
 
-- 平台差异：在不同的GPU驱动上，对于这种极小的`half`值处理方式可能不同。在某些OpenGL ES 3的实现上，`max`操作可能无法正确处理这个接近精度极限的值，从而产生了`NaN`（Not a Number）。
+不同移动 GPU/驱动对低精度浮点、NaN 的行为确实可能不同。Unity 官方明确写了：移动 GPU 上 `0 / 0` 可能得到 NaN、Infinity、0，或其他未指定值。[Unity Shader precision 文档](https://docs.unity3d.com/2022.2/Documentation/Manual/SL-DataTypesAndPrecision.html)
+
+但不能说“`max` 因为数太小而产生 NaN”。对两个有限数值，GLES 的 `max(x, y)` 定义是 `x < y` 时返回 `y`，否则返回 `x`；`max(0, 正常的正数 epsilon)` 应返回 epsilon，不会自行制造 NaN。[Khronos GLSL ES 3.20 规范，8.3 Common Functions](https://registry.khronos.org/OpenGL/specs/es/3.2/GLSL_ES_Specification_3.20.pdf)
+
+更准确的链路应是：
+
+```
+epsilon 太小，成为 subnormal 或在运算中被 flush 为 0
+-> max(0, epsilon) 实际收到的是 max(0, 0)
+-> 分母仍为 0
+-> 0 / 0
+-> GLES 移动驱动上的未指定结果，目标设备表现为 NaN/黑块
+```
+
+Khronos 规定 `mediump` 的最低保证范围从 `2^-14` 开始，即约 `0.00006103515625`；低于它的 subnormal 值可有更低精度，且规范允许 subnormal 被 flush 为 0。[Khronos GLSL ES 3.20 规范，4.7.1 Range and Precision](https://registry.khronos.org/OpenGL/specs/es/3.2/GLSL_ES_Specification_3.20.pdf)
+
+所以有:
+
+- `1e-5`、`1e-6` 小于 `2^-14`，属于不具备可移植保证的区间。若问题版本使用的是它们，NaN 推断很强。
+- 项目 Unity 宏里的 `HALF_MIN` 是 `2^-14 = 6.103515625e-5`，见 Macros.hlsl (line 45)。它恰好处于 `mediump` 的保证下限；在符合 `mediump` 保证的路径中，单独的 `max(0, HALF_MIN)` 不应变成 0。
+- 当前的 `0.0001` 比该下限高，且会作为非零 normal 值表示，因此作为 Terrain 归一化保护值更稳妥，见TerrainLit.hlsl (line 11)。
+
+最有价值的验证是对目标 Android 设备加一个临时 shader probe：分别测试 `half(1e-6)`、`half(1e-5)`、`half(HALF_MIN)`、`half(0.0001)` 经 `max(0, e)` 后是否仍大于 0。预期是前两个可能为 0，后两个必须非零；若 `HALF_MIN` 也为 0，则需要检查该变体是否被降成 `lowp`，或存在后端编译/驱动问题。
 
 Emmm...也许吧 反正就是一个GL的精度不够导致的计算出了问题导致的, 下辈子注意
