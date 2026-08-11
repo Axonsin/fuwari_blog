@@ -2,7 +2,6 @@
 title: Gauss-Seidel和Jacobi在物理约束求解的差异
 published: 2026-07-16
 description: "顺序求解和并行求解的差异."
-image: "./cover.jpeg"
 category: 图形学
 ---
 
