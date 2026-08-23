@@ -11,6 +11,13 @@ import {
 import { onMount } from "svelte";
 import type { LIGHT_DARK_MODE } from "@/types/config.ts";
 
+// Keep an explicit component prop so Astro can type its client hydration
+// directive correctly with Svelte 5's generated component definitions.
+interface Props {
+	hydrate?: boolean;
+}
+let { hydrate: _hydrate }: Props = $props();
+
 const seq: LIGHT_DARK_MODE[] = [LIGHT_MODE, DARK_MODE, AUTO_MODE];
 let mode: LIGHT_DARK_MODE = $state(AUTO_MODE);
 

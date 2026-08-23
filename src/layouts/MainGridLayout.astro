@@ -5,6 +5,7 @@ import Navbar from "@components/Navbar.astro";
 import SideBar from "@components/widget/SideBar.astro";
 import type { MarkdownHeading } from "astro";
 import { Icon } from "astro-icon/components";
+import { aboutHero } from "@/data/media/about-hero";
 import ImageWrapper from "../components/misc/ImageWrapper.astro";
 import TOC from "../components/widget/TOC.astro";
 import { siteConfig } from "../config";
@@ -18,6 +19,7 @@ import Layout from "./Layout.astro";
 interface Props {
 	title?: string;
 	banner?: string;
+	heroVariant?: "default" | "about-video";
 	description?: string;
 	lang?: string;
 	setOGTypeArticle?: boolean;
@@ -27,17 +29,26 @@ interface Props {
 const {
 	title,
 	banner,
+	heroVariant = "default",
 	description,
 	lang,
 	setOGTypeArticle,
 	headings = [],
 } = Astro.props;
+const hasCustomHero = heroVariant === "about-video" && Astro.slots.has("hero");
 const hasBannerCredit =
-	siteConfig.banner.enable && siteConfig.banner.credit.enable;
+	!hasCustomHero && siteConfig.banner.enable && siteConfig.banner.credit.enable;
 const hasBannerLink = !!siteConfig.banner.credit.url;
 
-const mainPanelTop = siteConfig.banner.enable
-	? `calc(${BANNER_HEIGHT}vh - ${MAIN_PANEL_OVERLAPS_BANNER_HEIGHT}rem)`
+const heroHeight = hasCustomHero
+	? aboutHero.presentation.heroHeightVh
+	: BANNER_HEIGHT;
+const heroOverlap = hasCustomHero
+	? aboutHero.presentation.contentOverlapRem
+	: MAIN_PANEL_OVERLAPS_BANNER_HEIGHT;
+const heroEnabled = hasCustomHero || siteConfig.banner.enable;
+const mainPanelTop = heroEnabled
+	? `calc(${heroHeight}vh - ${heroOverlap}rem)`
 	: "5.5rem";
 ---
 
@@ -51,16 +62,32 @@ const mainPanelTop = siteConfig.banner.enable
     </div>
 </div>
 
-<!-- Banner -->
-{siteConfig.banner.enable && <div id="banner-wrapper" class={`absolute z-10 w-full transition duration-700 overflow-hidden`} style={`top: -${BANNER_HEIGHT_EXTEND}vh`}>
-    <ImageWrapper id="banner" alt="Banner image of the blog" class:list={["object-cover h-full transition duration-700 opacity-0 scale-105"]}
-                  src={siteConfig.banner.src} position={siteConfig.banner.position}
-    >
-    </ImageWrapper>
-</div>}
+<!-- Stable hero host: Swup replaces it together with the page content. -->
+<div
+	id="hero-media"
+	class="absolute z-10 top-0 w-full"
+	data-hero-enabled={heroEnabled ? "true" : "false"}
+	data-hero-height={heroEnabled ? heroHeight : 0}
+	data-hero-overlap={heroOverlap}
+	data-hero-variant={heroVariant}
+>
+	{hasCustomHero ? (
+		<slot name="hero" />
+	) : siteConfig.banner.enable ? (
+		<div id="banner-wrapper" class="absolute w-full transition duration-700 overflow-hidden" style={`top: -${BANNER_HEIGHT_EXTEND}vh`}>
+			<ImageWrapper
+				id="banner"
+				alt="Banner image of the blog"
+				class:list={["object-cover h-full transition duration-700 opacity-0 scale-105"]}
+				src={siteConfig.banner.src}
+				position={siteConfig.banner.position}
+			/>
+		</div>
+	) : null}
+</div>
 
 <!-- Main content -->
-<div class="absolute w-full z-30 pointer-events-none" style={`top: ${mainPanelTop}`}>
+<div id="main-panel" class="absolute w-full z-30 pointer-events-none" style={`top: var(--main-panel-top, ${mainPanelTop})`}>
     <!-- The pointer-events-none here prevent blocking the click event of the TOC -->
     <div class="relative max-w-[var(--page-width)] mx-auto pointer-events-auto">
         <div id="main-grid" class="transition duration-700 w-full left-0 right-0 grid grid-cols-[17.5rem_auto] grid-rows-[auto_1fr_auto] lg:grid-rows-[auto]

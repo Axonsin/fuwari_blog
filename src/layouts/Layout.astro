@@ -211,6 +211,7 @@ import {
 	MAIN_PANEL_OVERLAPS_BANNER_HEIGHT
 } from "../constants/constants";
 import { siteConfig } from '../config';
+import {destroyAboutHero, initializeAboutHero} from "../scripts/about-hero";
 
 /* Preload fonts */
 // (async function() {
@@ -256,7 +257,41 @@ function disableAnimation() {
 }
 */
 
-const bannerEnabled = !!document.getElementById('banner-wrapper')
+function getHeroMedia(): HTMLElement | null {
+	return document.getElementById('hero-media')
+}
+
+function isHeroEnabled(): boolean {
+	return getHeroMedia()?.dataset.heroEnabled === 'true'
+}
+
+function getActiveHeroHeight(): number {
+	const hero = getHeroMedia()
+	const configuredHeight = Number(hero?.dataset.heroHeight || 0)
+	if (
+		hero?.dataset.heroVariant === 'default' &&
+		document.body.classList.contains('lg:is-home') &&
+		window.innerWidth >= 1024
+	) {
+		return BANNER_HEIGHT_HOME
+	}
+	return Number.isFinite(configuredHeight) ? configuredHeight : 0
+}
+
+function getActiveHeroOverlap(): number {
+	const configuredOverlap = Number(getHeroMedia()?.dataset.heroOverlap)
+	return Number.isFinite(configuredOverlap)
+		? configuredOverlap
+		: MAIN_PANEL_OVERLAPS_BANNER_HEIGHT
+}
+
+function syncHeroShell(): void {
+	const height = getActiveHeroHeight()
+	const mainPanelTop = isHeroEnabled()
+		? `calc(${height}vh - ${getActiveHeroOverlap()}rem)`
+		: '5.5rem'
+	document.documentElement.style.setProperty('--main-panel-top', mainPanelTop)
+}
 
 function setClickOutsideToClose(panel: string, ignores: string[]) {
 	document.addEventListener("click", event => {
@@ -355,10 +390,7 @@ function showBanner() {
 	if (!siteConfig.banner.enable) return;
 
 	const banner = document.getElementById('banner');
-	if (!banner) {
-		console.error('Banner element not found');
-		return;
-	}
+	if (!banner) return;
 
 	banner.classList.remove('opacity-0', 'scale-105');
 }
@@ -368,7 +400,10 @@ function init() {
 	loadTheme();
 	loadHue();
 	initCustomScrollbar();
+	syncHeroShell();
 	showBanner();
+	void initializeAboutHero();
+	scrollFunction();
 }
 
 /* Load settings when entering the site */
@@ -392,7 +427,7 @@ const setup = () => {
 		document.documentElement.style.setProperty('--content-delay', '0ms')
 
 		// prevent elements from overlapping the navbar
-		if (!bannerEnabled) {
+		if (!isHeroEnabled()) {
 			return
 		}
 		let threshold = window.innerHeight * (BANNER_HEIGHT / 100) - 72 - 16
@@ -404,7 +439,14 @@ const setup = () => {
 			navbar.classList.add('navbar-hidden')
 		}
 	})
-	window.swup.hooks.on('content:replace', initCustomScrollbar)
+	window.swup.hooks.on('content:replace', destroyAboutHero, {before: true})
+	window.swup.hooks.on('content:replace', () => {
+		initCustomScrollbar()
+		syncHeroShell()
+		showBanner()
+		void initializeAboutHero()
+		scrollFunction()
+	})
 	window.swup.hooks.on('visit:start', (visit: {to: {url: string}}) => {
 		// change banner height immediately when a link is clicked
 		const bodyElement = document.querySelector('body')
@@ -454,11 +496,12 @@ if (window?.swup?.hooks) {
 	document.addEventListener('swup:enable', setup)
 }
 
-let backToTopBtn = document.getElementById('back-to-top-btn');
-let toc = document.getElementById('toc-wrapper');
-let navbar = document.getElementById('navbar-wrapper')
 function scrollFunction() {
-	let bannerHeight = window.innerHeight * (BANNER_HEIGHT / 100)
+	const backToTopBtn = document.getElementById('back-to-top-btn');
+	const toc = document.getElementById('toc-wrapper');
+	const navbar = document.getElementById('navbar-wrapper')
+	const activeHeroHeight = getActiveHeroHeight()
+	let bannerHeight = window.innerHeight * (activeHeroHeight / 100)
 
 	if (backToTopBtn) {
 		if (document.body.scrollTop > bannerHeight || document.documentElement.scrollTop > bannerHeight) {
@@ -468,7 +511,7 @@ function scrollFunction() {
 		}
 	}
 
-	if (bannerEnabled && toc) {
+	if (isHeroEnabled() && toc) {
 		if (document.body.scrollTop > bannerHeight || document.documentElement.scrollTop > bannerHeight) {
 			toc.classList.remove('toc-hide')
 		} else {
@@ -476,15 +519,13 @@ function scrollFunction() {
 		}
 	}
 
-	if (!bannerEnabled) return
+	if (!isHeroEnabled()) return
 	if (navbar) {
 		const NAVBAR_HEIGHT = 72
-		const MAIN_PANEL_EXCESS_HEIGHT = MAIN_PANEL_OVERLAPS_BANNER_HEIGHT * 16			// The height the main panel overlaps the banner
+		const rootFontSize = Number.parseFloat(getComputedStyle(document.documentElement).fontSize)
+		const MAIN_PANEL_EXCESS_HEIGHT = getActiveHeroOverlap() * rootFontSize			// The height the main panel overlaps the banner
 
-		let bannerHeight = BANNER_HEIGHT
-		if (document.body.classList.contains('lg:is-home') && window.innerWidth >= 1024) {
-			bannerHeight = BANNER_HEIGHT_HOME
-		}
+		let bannerHeight = activeHeroHeight
 		let threshold = window.innerHeight * (bannerHeight / 100) - NAVBAR_HEIGHT - MAIN_PANEL_EXCESS_HEIGHT - 16
 		if (document.body.scrollTop >= threshold || document.documentElement.scrollTop >= threshold) {
 			navbar.classList.add('navbar-hidden')
@@ -500,6 +541,8 @@ window.onresize = () => {
 	let offset = Math.floor(window.innerHeight * (BANNER_HEIGHT_EXTEND / 100));
 	offset = offset - offset % 4;
 	document.documentElement.style.setProperty('--banner-height-extend', `${offset}px`);
+	syncHeroShell();
+	scrollFunction();
 }
 
 </script>
